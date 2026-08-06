@@ -1,0 +1,4 @@
+backend → ASP.NET Core solution
+frontend → Angular application
+database → SQL scripts
+documents → Requirements, API docs, architecture diagrams
