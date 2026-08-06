@@ -1,0 +1,16 @@
+Complete Git Commands
+cd D:\Projects
+
+git clone https://github.com/YourUserName/HospitalManagementSystem.git
+
+cd HospitalManagementSystem
+
+git status
+
+code .
+
+git add .
+
+git commit -m "Initial project structure"
+
+git push origin main
