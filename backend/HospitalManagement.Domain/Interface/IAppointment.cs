@@ -9,5 +9,7 @@ namespace HospitalManagement.Domain.Interface
     {
         Task<List<Appointment>> GetAll();
         Task<Appointment> Post();
+        Task<Appointment> UpdateUser(Appointment appointment);
+        Task<Appointment> DeleteUser(int id);
     }
 }
