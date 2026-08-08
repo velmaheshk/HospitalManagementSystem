@@ -8,6 +8,6 @@ namespace HospitalManagement.Domain.Interface
     public interface IAppointment
     {
         Task<List<Appointment>> GetAll();
-        Task<Appointment> GetByID();
+        Task<Appointment> Post();
     }
 }
