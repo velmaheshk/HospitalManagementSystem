@@ -1,4 +1,8 @@
+using HospitalManagement.Application.IService;
+using HospitalManagement.Application.Services;
+using HospitalManagement.Domain.IRepository;
 using HospitalManagement.Infrastructure.Data;
+using HospitalManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
@@ -9,6 +13,10 @@ builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+
+builder.Services.AddScoped<IPatientService, PatientService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

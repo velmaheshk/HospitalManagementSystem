@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HospitalManagement.Domain.Interface
+namespace HospitalManagement.Domain.Interface.IRepository
 {
     public interface IAppointment
     {
