@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Domain.Entities;
+﻿using HospitalManagement.Application.Interfaces;
+using HospitalManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace HospitalManagement.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -24,10 +25,12 @@ namespace HospitalManagement.Infrastructure.Data
         public DbSet<Bill> Bills => Set<Bill>();
         public DbSet<BillItem> BillItems => Set<BillItem>();
         public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ---- Users / Roles ----
+
             modelBuilder.Entity<Role>().HasIndex(r => r.RoleName).IsUnique();
             modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
@@ -98,6 +101,17 @@ namespace HospitalManagement.Infrastructure.Data
                 .HasForeignKey(bi => bi.BillId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<BillItem>().Property(bi => bi.UnitPrice).HasColumnType("decimal(10,2)");
             modelBuilder.Entity<BillItem>().Property(bi => bi.Amount).HasColumnType("decimal(10,2)");
+
+            // ---- RefreshTokens ----
+            modelBuilder.Entity<RefreshToken>().HasIndex(rt => rt.Token).IsUnique();
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RefreshToken>().Ignore(rt => rt.IsActive);
 
             modelBuilder.Entity<AuditLog>().HasKey(a => a.LogId);
             modelBuilder.Entity<DoctorAvailability>().HasKey(a => a.AvailabilityId);
