@@ -1,0 +1,717 @@
+<div class="dashboard-container">
+
+  <!-- ========================= -->
+  <!-- SIDEBAR -->
+  <!-- ========================= -->
+
+  <aside
+    class="sidebar"
+    [class.closed]="!sidebarOpen">
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        🏥
+      </div>
+
+      <span
+        *ngIf="sidebarOpen">
+        HMS
+      </span>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <nav class="navigation">
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item">
+
+        <span class="nav-icon">
+          📊
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Dashboard
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/patients"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          👥
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Patients
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/doctor/doctor-list"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          👨‍⚕️
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Doctors
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/appointments"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          📅
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Appointments
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/billing"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          💳
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Billing
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/pharmacy"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          💊
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Pharmacy
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/reports"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          📈
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          Reports
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/users"
+        routerLinkActive="active"
+        class="nav-item">
+
+        <span class="nav-icon">
+          ⚙️
+        </span>
+
+        <span
+          *ngIf="sidebarOpen"
+          class="nav-text">
+          User Management
+        </span>
+
+      </a>
+
+    </nav>
+
+
+    <!-- Logout -->
+
+    <div class="sidebar-bottom">
+
+      <button
+        class="logout-button"
+        (click)="logout()">
+
+        <span>
+          🚪
+        </span>
+
+        <span
+          *ngIf="sidebarOpen">
+          Logout
+        </span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- ========================= -->
+  <!-- MAIN CONTENT -->
+  <!-- ========================= -->
+
+  <main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <header class="top-header">
+
+      <button
+        class="menu-button"
+        (click)="toggleSidebar()">
+
+        ☰
+
+      </button>
+
+
+      <div class="header-title">
+
+        <h1>
+          Hospital Management System
+        </h1>
+
+        <p>
+          Admin Dashboard
+        </p>
+
+      </div>
+
+
+      <div class="header-right">
+
+        <button class="notification-button">
+          🔔
+          <span class="notification-count">
+            3
+          </span>
+        </button>
+
+
+        <div class="profile">
+
+          <div class="profile-avatar">
+            👤
+          </div>
+
+          <div
+            class="profile-info"
+            *ngIf="sidebarOpen">
+
+            <strong>
+              {{ getUserName() }}
+            </strong>
+
+            <small>
+              Administrator
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- CONTENT -->
+    <!-- ========================= -->
+
+    <section class="content">
+
+
+      <!-- Welcome -->
+
+      <div class="welcome-section">
+
+        <div>
+
+          <h2>
+            Welcome back, {{ getUserName() }} 👋
+          </h2>
+
+          <p>
+            Here's what's happening in your hospital today.
+          </p>
+
+        </div>
+
+        <div class="date">
+
+          {{ currentDate | date:'EEEE, dd MMMM yyyy' }}
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- STATISTICS -->
+      <!-- ========================= -->
+
+      <div class="stats-grid">
+
+        <div
+          class="stat-card"
+          *ngFor="let stat of stats">
+
+          <div class="stat-icon">
+
+            {{ stat.icon }}
+
+          </div>
+
+
+          <div class="stat-content">
+
+            <p>
+              {{ stat.title }}
+            </p>
+
+            <h3>
+
+              <ng-container
+                *ngIf="stat.title === 'Revenue'; else normalNumber">
+
+                ₹{{ stat.value | number }}
+
+              </ng-container>
+
+              <ng-template #normalNumber>
+
+                {{ stat.value | number }}
+
+              </ng-template>
+
+            </h3>
+
+            <small>
+              {{ stat.description }}
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- DASHBOARD GRID -->
+      <!-- ========================= -->
+
+      <div class="dashboard-grid">
+
+
+        <!-- APPOINTMENTS -->
+
+        <div class="panel appointments-panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <h3>
+                Today's Appointments
+              </h3>
+
+              <p>
+                Recent appointment schedule
+              </p>
+
+            </div>
+
+            <a
+              routerLink="/appointments"
+              class="view-all">
+
+              View All
+
+            </a>
+
+          </div>
+
+
+          <div class="table-container">
+
+            <table>
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Patient
+                  </th>
+
+                  <th>
+                    Doctor
+                  </th>
+
+                  <th>
+                    Date
+                  </th>
+
+                  <th>
+                    Time
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+
+                <tr
+                  *ngFor="let appointment of appointments">
+
+                  <td>
+
+                    <div class="patient-name">
+
+                      <div class="patient-avatar">
+                        👤
+                      </div>
+
+                      {{ appointment.patient }}
+
+                    </div>
+
+                  </td>
+
+
+                  <td>
+                    {{ appointment.doctor }}
+                  </td>
+
+
+                  <td>
+                    {{ appointment.date }}
+                  </td>
+
+
+                  <td>
+                    {{ appointment.time }}
+                  </td>
+
+
+                  <td>
+
+                    <span
+                      class="status"
+                      [class.confirmed]="appointment.status === 'Confirmed'"
+                      [class.pending]="appointment.status === 'Pending'"
+                      [class.completed]="appointment.status === 'Completed'">
+
+                      {{ appointment.status }}
+
+                    </span>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="panel quick-panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <h3>
+                Quick Actions
+              </h3>
+
+              <p>
+                Frequently used features
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="quick-actions">
+
+
+            <a
+              routerLink="/patients"
+              class="quick-action">
+
+              <span>
+                👤
+              </span>
+
+              <div>
+
+                <strong>
+                  Add Patient
+                </strong>
+
+                <small>
+                  Register a new patient
+                </small>
+
+              </div>
+
+            </a>
+
+
+            <a
+              routerLink="/doctor/doctor-form"
+              class="quick-action">
+
+              <span>
+                👨‍⚕️
+              </span>
+
+              <div>
+
+                <strong>
+                  Add Doctor
+                </strong>
+
+                <small>
+                  Register a new doctor
+                </small>
+
+              </div>
+
+            </a>
+
+
+            <a
+              routerLink="/appointments"
+              class="quick-action">
+
+              <span>
+                📅
+              </span>
+
+              <div>
+
+                <strong>
+                  Book Appointment
+                </strong>
+
+                <small>
+                  Schedule appointment
+                </small>
+
+              </div>
+
+            </a>
+
+
+            <a
+              routerLink="/billing"
+              class="quick-action">
+
+              <span>
+                💳
+              </span>
+
+              <div>
+
+                <strong>
+                  Create Bill
+                </strong>
+
+                <small>
+                  Generate patient bill
+                </small>
+
+              </div>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- BOTTOM CARDS -->
+      <!-- ========================= -->
+
+      <div class="bottom-grid">
+
+
+        <div class="summary-card">
+
+          <div class="summary-icon">
+            🏥
+          </div>
+
+          <div>
+
+            <span>
+              Available Beds
+            </span>
+
+            <strong>
+              42
+            </strong>
+
+            <small>
+              of 120 total beds
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-icon">
+            💊
+          </div>
+
+          <div>
+
+            <span>
+              Pharmacy Stock
+            </span>
+
+            <strong>
+              1,245
+            </strong>
+
+            <small>
+              Medicines available
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-icon">
+            💰
+          </div>
+
+          <div>
+
+            <span>
+              Pending Bills
+            </span>
+
+            <strong>
+              28
+            </strong>
+
+            <small>
+              Awaiting payment
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <div class="summary-icon">
+            📋
+          </div>
+
+          <div>
+
+            <span>
+              Reports
+            </span>
+
+            <strong>
+              16
+            </strong>
+
+            <small>
+              Generated this month
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  </main>
+
+</div>
