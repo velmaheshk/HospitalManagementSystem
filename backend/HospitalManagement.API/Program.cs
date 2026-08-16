@@ -1,17 +1,27 @@
-using HospitalManagement.API.Middleware;
-using HospitalManagement.Application.Interfaces;
+using HospitalManagement.Application.IService;
 using HospitalManagement.Application.Services;
+using HospitalManagement.Domain.IRepository;
 using HospitalManagement.Infrastructure.Data;
-using HospitalManagement.Infrastructure.Security;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers
-builder.Services.AddControllers();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+
+builder.Services.AddScoped<IPatientService, PatientService>();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Hospital Management API",
+        Version = "v1",
+        Description = "ASP.NET Core Web API for Hospital Management System"
+    });
+});
 
 // DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
