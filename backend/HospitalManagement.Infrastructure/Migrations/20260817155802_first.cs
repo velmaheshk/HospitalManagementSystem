@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospitalManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initialdatabase : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

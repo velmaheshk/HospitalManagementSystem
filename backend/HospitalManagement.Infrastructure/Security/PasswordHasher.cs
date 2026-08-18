@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Application.Interfaces;
+﻿using BCrypt.Net;
+using HospitalManagement.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

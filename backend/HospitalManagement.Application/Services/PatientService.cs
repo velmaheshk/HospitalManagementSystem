@@ -1,6 +1,5 @@
 ﻿using HospitalManagement.Application.DTO;
-
-using HospitalManagement.Application.IService;
+using HospitalManagement.Application.Interfaces;
 using HospitalManagement.Domain.Entities;
 using HospitalManagement.Domain.IRepository;
 

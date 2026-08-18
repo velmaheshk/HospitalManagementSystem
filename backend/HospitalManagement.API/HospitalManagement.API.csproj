@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net10.0\HospitalManagement.API.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net10.0\HospitalManagement.API.GlobalUsings.g.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="obj\Debug\net10.0\rpswa.dswa.cache.json" />
+    <Content Include="obj\Debug\net10.0\staticwebassets.removed.txt" />
+    <Content Include="obj\HospitalManagement.API.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
@@ -19,6 +32,23 @@
   <ItemGroup>
     <ProjectReference Include="..\HospitalManagement.Application\HospitalManagement.Application.csproj" />
     <ProjectReference Include="..\HospitalManagement.Infrastructure\HospitalManagement.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net10.0\" />
+    <Folder Include="obj\Debug\net10.0\refint\" />
+    <Folder Include="obj\Debug\net10.0\ref\" />
+    <Folder Include="obj\Debug\net10.0\staticwebassets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="obj\Debug\net10.0\HospitalManagement.API.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.API.assets.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.API.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.API.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\HospitalManagement.API.csproj.nuget.g.props" />
+    <None Include="obj\HospitalManagement.API.csproj.nuget.g.targets" />
+    <None Include="obj\project.nuget.cache" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HospitalManagement.Application.IService
+namespace HospitalManagement.Application.Interfaces
 {
     public interface IPatientService
     {
