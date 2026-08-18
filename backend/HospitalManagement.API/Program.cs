@@ -1,4 +1,4 @@
-using HospitalManagement.Application.IService;
+using HospitalManagement.Application.Mappings;
 using HospitalManagement.Application.Services;
 using HospitalManagement.Domain.IRepository;
 using HospitalManagement.Infrastructure.Data;
@@ -6,12 +6,30 @@ using HospitalManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HospitalManagement.API.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalManagement.Application.Interfaces;
+using HospitalManagement.Infrastructure.Security;
+using Microsoft.OpenApi;
+using HospitalManagement.Domain.Interface.IRepository;
+//using HospitalManagement.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(AppointmentProfile).Assembly);
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {

@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DTOs\**" />
-    <EmbeddedResource Remove="DTOs\**" />
-    <None Remove="DTOs\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="bin\Debug\net10.0\" />
     <Folder Include="Common\" />
     <Folder Include="Features\" />
     <Folder Include="AutoMapper\" />
+    <Folder Include="obj\Debug\net10.0\refint\" />
+    <Folder Include="obj\Debug\net10.0\ref\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
@@ -28,6 +25,41 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HospitalManagement.Domain\HospitalManagement.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalManagement.Domain\HospitalManagement.Domain.csproj" />
+    <Compile Remove="Common\**" />
+    <Compile Remove="Features\**" />
+    <EmbeddedResource Remove="Common\**" />
+    <EmbeddedResource Remove="Features\**" />
+    <None Remove="Common\**" />
+    <None Remove="Features\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net10.0\HospitalManagement.Application.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net10.0\HospitalManagement.Application.GlobalUsings.g.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="obj\HospitalManagement.Application.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="obj\Debug\net10.0\HospitalManagement.Application.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.Application.assets.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.Application.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\net10.0\HospitalManagement.Application.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\HospitalManagement.Application.csproj.nuget.g.props" />
+    <None Include="obj\HospitalManagement.Application.csproj.nuget.g.targets" />
+    <None Include="obj\project.nuget.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
   </ItemGroup>
 
   <ItemGroup>

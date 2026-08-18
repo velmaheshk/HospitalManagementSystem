@@ -1,6 +1,5 @@
 ﻿using HospitalManagement.Application.DTO;
-
-using HospitalManagement.Application.IService;
+using HospitalManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.API.Controllers
