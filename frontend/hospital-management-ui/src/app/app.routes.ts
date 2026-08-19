@@ -85,6 +85,13 @@ export const routes: Routes = [
       )
   },
 
+    {
+    path: 'patient',
+    loadChildren: () =>
+      import('./patient/patient.routes')
+        .then(m => m.patientRoutes)
+  },
+
 
   // =====================================================
   // PATIENT / NORMAL USER DASHBOARD
@@ -170,3 +177,19 @@ export const routes: Routes = [
   }
 
 ];
+// export const routes: Routes = [
+
+//   {
+//     path: 'patient',
+//     loadChildren: () =>
+//       import('./patient/patient.routes')
+//         .then(m => m.patientRoutes)
+//   },
+
+//   {
+//     path: '',
+//     redirectTo: 'patient',
+//     pathMatch: 'full'
+//   }
+
+// ];

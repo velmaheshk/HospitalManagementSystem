@@ -1,0 +1,191 @@
+.patient-container {
+  padding: 30px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* Header */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #222;
+}
+
+.page-header p {
+  margin-top: 8px;
+  color: #555;
+}
+
+
+/* Add button */
+
+.add-button {
+  background-color: #1976d2;
+  color: white;
+
+  border: none;
+  border-radius: 5px;
+
+  padding: 11px 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #125ca1;
+}
+
+
+/* Table */
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  background-color: white;
+
+  margin-top: 20px;
+}
+
+.patient-table th {
+  background-color: #1976d2;
+  color: white;
+
+  padding: 12px;
+
+  text-align: left;
+
+  border: 1px solid #ddd;
+}
+
+.patient-table td {
+  padding: 10px;
+
+  color: #222;
+
+  border: 1px solid #ddd;
+
+  vertical-align: middle;
+}
+
+.patient-table tr:hover {
+  background-color: #f5f9ff;
+}
+
+
+/* Actions */
+
+.actions {
+  white-space: nowrap;
+}
+
+
+/* View */
+
+.view-button {
+  background-color: #2196f3;
+  color: white;
+
+  border: none;
+  border-radius: 4px;
+
+  padding: 7px 12px;
+
+  margin-right: 5px;
+
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background-color: #0b7dda;
+}
+
+
+/* Edit */
+
+.edit-button {
+  background-color: #ff9800;
+  color: white;
+
+  border: none;
+  border-radius: 4px;
+
+  padding: 7px 12px;
+
+  margin-right: 5px;
+
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #e68900;
+}
+
+
+/* Delete */
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+
+  border: none;
+  border-radius: 4px;
+
+  padding: 7px 12px;
+
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+
+/* Loading */
+
+.loading {
+  padding: 20px;
+
+  background: white;
+
+  color: #555;
+
+  border-radius: 5px;
+}
+
+
+/* Error */
+
+.error {
+  padding: 15px;
+
+  background: #ffebee;
+
+  color: #c62828;
+
+  border-radius: 5px;
+}
+
+
+/* No data */
+
+.no-data {
+  padding: 30px;
+
+  background: white;
+
+  text-align: center;
+
+  color: #555;
+}

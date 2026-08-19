@@ -141,6 +141,9 @@ app.UseCors("AllowAngular");
 app.UseAuthentication();
 app.UseAuthorization();
 
+//app.UseHttpsRedirection();
+ 
+
 app.MapControllers();
 
 app.Run();

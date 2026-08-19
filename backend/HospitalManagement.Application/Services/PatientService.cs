@@ -58,9 +58,7 @@ namespace HospitalManagement.Application.Services
             return MapToResponse(createdPatient);
         }
 
-        public async Task<PatientResponseDTO?> UpdateAsync(
-    int id,
-    PatientUpdateDTO dto)
+        public async Task<PatientResponseDTO?> UpdateAsync(int id,PatientUpdateDTO dto)
         {
             var patient = new Patient
             {

@@ -1,0 +1,306 @@
+<style>
+  .patient-container {
+    padding: 30px;
+    background: #f4f6f9;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+  .patient-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .patient-header h1 {
+    margin: 0;
+    color: #222;
+    font-size: 28px;
+  }
+
+  .patient-count {
+    margin-top: 8px;
+    color: #666;
+  }
+
+  .add-button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .add-button:hover {
+    background: #125ca1;
+  }
+
+  .patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .patient-table th {
+    background: #1976d2;
+    color: white;
+    padding: 14px;
+    text-align: left;
+  }
+
+  .patient-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+  }
+
+  .patient-table tr:hover {
+    background: #f1f7ff;
+  }
+
+  .actions {
+    white-space: nowrap;
+  }
+
+  .view-button {
+    background: #2196f3;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .edit-button {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .delete-button {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .view-button:hover {
+    background: #0b7dda;
+  }
+
+  .edit-button:hover {
+    background: #e68900;
+  }
+
+  .delete-button:hover {
+    background: #d32f2f;
+  }
+
+  .loading {
+    padding: 20px;
+    background: white;
+    text-align: center;
+  }
+
+  .error {
+    padding: 15px;
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  @media (max-width: 1000px) {
+    .patient-container {
+      overflow-x: auto;
+    }
+
+    .patient-header {
+      min-width: 900px;
+    }
+
+    .patient-table {
+      min-width: 1000px;
+    }
+  }
+</style>
+
+
+<div class="patient-container">
+
+  <!-- HEADER -->
+
+  <div class="patient-header">
+
+    <div>
+      <h1>Patient List</h1>
+
+      <div class="patient-count">
+        Total Patients: {{ patients.length }}
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="add-button"
+      (click)="addPatient()">
+
+      + Add Patient
+
+    </button>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    Loading patients...
+
+  </div>
+
+
+  <!-- ERROR -->
+
+  <div
+    class="error"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <table
+    class="patient-table"
+    *ngIf="!loading && patients.length > 0">
+
+    <thead>
+
+      <tr>
+
+        <th>Patient ID</th>
+        <th>User ID</th>
+        <th>Full Name</th>
+        <th>DOB</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Blood Group</th>
+        <th>Emergency Contact</th>
+        <th>Phone</th>
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+
+      <tr *ngFor="let patient of patients">
+
+        <td>
+          {{ patient.patientId }}
+        </td>
+
+        <td>
+          {{ patient.userId }}
+        </td>
+
+        <td>
+          {{ patient.fullName }}
+        </td>
+
+        <td>
+          {{ patient.dob | date:'dd-MM-yyyy' }}
+        </td>
+
+        <td>
+          {{ patient.gender }}
+        </td>
+
+        <td>
+          {{ patient.address }}
+        </td>
+
+        <td>
+          {{ patient.bloodGroup }}
+        </td>
+
+        <td>
+          {{ patient.emergencyContactName }}
+        </td>
+
+        <td>
+          {{ patient.emergencyContactPhone }}
+        </td>
+
+
+        <!-- ACTIONS -->
+
+        <td class="actions">
+
+          <button
+            type="button"
+            class="view-button"
+            (click)="viewPatient(patient.patientId)">
+
+            View
+
+          </button>
+
+
+          <button
+            type="button"
+            class="edit-button"
+            (click)="editPatient(patient.patientId)">
+
+            Edit
+
+          </button>
+
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="deletePatient(patient.patientId)">
+
+            Delete
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+
+  <!-- NO DATA -->
+
+  <div
+    *ngIf="!loading && !errorMessage && patients.length === 0">
+
+    No patients found.
+
+  </div>
+
+</div>
