@@ -1,0 +1,407 @@
+.patient-details-page {
+  min-height: 100vh;
+  padding: 35px 45px;
+  background: #f5f7fb;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Main wrapper */
+
+.patient-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.patient-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  padding: 28px 32px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07);
+
+  margin-bottom: 24px;
+}
+
+
+.patient-avatar {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  );
+
+  color: #ffffff;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+
+.patient-title {
+  flex: 1;
+}
+
+
+.patient-title h1 {
+  margin: 0 0 6px;
+
+  color: #172033;
+
+  font-size: 27px;
+  font-weight: 700;
+}
+
+
+.patient-title p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+.patient-status {
+  padding: 8px 15px;
+
+  border-radius: 20px;
+
+  background: #ecfdf3;
+
+  color: #15803d;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   INFORMATION SECTION
+========================= */
+
+.information-section {
+  margin-bottom: 24px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+
+.section-title {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 25px;
+}
+
+
+.section-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+
+  font-size: 20px;
+}
+
+
+.section-title h2 {
+  margin: 0 0 4px;
+
+  color: #1e293b;
+
+  font-size: 19px;
+}
+
+
+.section-title p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   INFO GRID
+========================= */
+
+.info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+
+.info-card {
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e8edf3;
+
+  border-radius: 10px;
+
+  transition: 0.2s ease;
+}
+
+
+.info-card:hover {
+  border-color: #bfdbfe;
+
+  background: #f8fbff;
+
+  transform: translateY(-2px);
+}
+
+
+.info-card label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+.info-card strong {
+  color: #1e293b;
+
+  font-size: 15px;
+}
+
+
+.blood-group {
+  color: #dc2626 !important;
+
+  font-size: 17px !important;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+
+.contact-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border: 1px solid #e8edf3;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+
+.contact-icon {
+  min-width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f1f5f9;
+
+  font-size: 18px;
+}
+
+
+.contact-card label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+.contact-card strong {
+  color: #334155;
+
+  font-size: 14px;
+
+  word-break: break-word;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 20px;
+}
+
+
+.back-button {
+  padding: 11px 20px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.back-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading {
+  max-width: 1100px;
+
+  margin: 80px auto;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 16px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .patient-details-page {
+    padding: 25px 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .patient-details-page {
+    padding: 18px 12px;
+  }
+
+  .patient-header {
+    flex-wrap: wrap;
+
+    padding: 22px;
+  }
+
+  .patient-title h1 {
+    font-size: 22px;
+  }
+
+  .patient-status {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .information-section {
+    padding: 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .back-button {
+    width: 100%;
+  }
+}

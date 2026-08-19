@@ -1,0 +1,163 @@
+<div class="patient-details-page">
+
+  <div *ngIf="loading" class="loading">
+    Loading patient details...
+  </div>
+
+  <div *ngIf="!loading && patient" class="patient-wrapper">
+
+    <!-- Header -->
+    <div class="patient-header">
+
+      <div class="patient-avatar">
+        {{ patient.fullName?.charAt(0) || 'P' }}
+      </div>
+
+      <div class="patient-title">
+        <h1>{{ patient.fullName }}</h1>
+        <p>Patient ID: #{{ patient.patientId }}</p>
+      </div>
+
+      <div class="patient-status">
+        <span>Active Patient</span>
+      </div>
+
+    </div>
+
+
+    <!-- Main Information -->
+    <div class="information-section">
+
+      <div class="section-title">
+        <div class="section-icon">👤</div>
+
+        <div>
+          <h2>Personal Information</h2>
+          <p>Patient basic information</p>
+        </div>
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-card">
+          <label>Patient ID</label>
+          <strong>#{{ patient.patientId }}</strong>
+        </div>
+
+        <div class="info-card">
+          <label>User ID</label>
+          <strong>{{ patient.userId }}</strong>
+        </div>
+
+        <div class="info-card">
+          <label>Full Name</label>
+          <strong>{{ patient.fullName }}</strong>
+        </div>
+
+        <div class="info-card">
+          <label>Date of Birth</label>
+          <strong>{{ patient.dob | date:'dd MMM yyyy' }}</strong>
+        </div>
+
+        <div class="info-card">
+          <label>Gender</label>
+          <strong>{{ patient.gender }}</strong>
+        </div>
+
+        <div class="info-card">
+          <label>Blood Group</label>
+          <strong class="blood-group">
+            {{ patient.bloodGroup }}
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Contact Information -->
+    <div class="information-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">📞</div>
+
+        <div>
+          <h2>Contact Information</h2>
+          <p>Patient emergency contact details</p>
+        </div>
+
+      </div>
+
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+
+          <div class="contact-icon">
+            📍
+          </div>
+
+          <div>
+            <label>Address</label>
+            <strong>{{ patient.address }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="contact-card">
+
+          <div class="contact-icon">
+            👤
+          </div>
+
+          <div>
+            <label>Emergency Contact</label>
+            <strong>
+              {{ patient.emergencyContactName }}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="contact-card">
+
+          <div class="contact-icon">
+            📱
+          </div>
+
+          <div>
+            <label>Emergency Phone</label>
+            <strong>
+              {{ patient.emergencyContactPhone }}
+            </strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Back Button -->
+    <div class="actions">
+
+      <button
+        type="button"
+        routerLink="/patient"
+        class="back-button">
+
+        ← Back to Patients
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
