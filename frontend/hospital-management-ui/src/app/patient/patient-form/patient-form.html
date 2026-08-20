@@ -1,0 +1,174 @@
+<div class="form-page">
+
+  <div class="form-card">
+
+    <div class="form-header">
+      <h2>Add Patient</h2>
+      <p>Enter patient information</p>
+    </div>
+
+    <form
+      [formGroup]="patientForm"
+      (ngSubmit)="submitForm()"
+      novalidate>
+
+      <div class="form-grid">
+
+        <!-- User ID -->
+        <div class="form-group">
+          <label>User ID</label>
+
+          <input
+            type="number"
+            formControlName="userId"
+            placeholder="Enter User ID">
+
+          <span
+            class="error"
+            *ngIf="patientForm.get('userId')?.touched &&
+                   patientForm.get('userId')?.invalid">
+            User ID is required
+          </span>
+        </div>
+
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label>Full Name</label>
+
+          <input
+            type="text"
+            formControlName="fullName"
+            placeholder="Enter full name">
+
+          <span
+            class="error"
+            *ngIf="patientForm.get('fullName')?.touched &&
+                   patientForm.get('fullName')?.invalid">
+            Full name is required
+          </span>
+        </div>
+
+
+        <!-- DOB -->
+        <div class="form-group">
+          <label>Date of Birth</label>
+
+          <input
+            type="date"
+            formControlName="dob">
+        </div>
+
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label>Gender</label>
+
+          <select formControlName="gender">
+
+            <option value="">
+              Select Gender
+            </option>
+
+            <option value="Male">
+              Male
+            </option>
+
+            <option value="Female">
+              Female
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+        </div>
+
+
+        <!-- Address -->
+        <div class="form-group full-width">
+          <label>Address</label>
+
+          <textarea
+            formControlName="address"
+            placeholder="Enter address">
+          </textarea>
+        </div>
+
+
+        <!-- Blood Group -->
+        <div class="form-group">
+          <label>Blood Group</label>
+
+          <select formControlName="bloodGroup">
+
+            <option value="">
+              Select Blood Group
+            </option>
+
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+
+          </select>
+        </div>
+
+
+        <!-- Emergency Name -->
+        <div class="form-group">
+          <label>Emergency Contact Name</label>
+
+          <input
+            type="text"
+            formControlName="emergencyContactName"
+            placeholder="Contact name">
+        </div>
+
+
+        <!-- Emergency Phone -->
+        <div class="form-group">
+          <label>Emergency Contact Phone</label>
+
+          <input
+            type="text"
+            formControlName="emergencyContactPhone"
+            placeholder="Contact phone">
+        </div>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="save-btn">
+
+          Save Patient
+
+        </button>
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

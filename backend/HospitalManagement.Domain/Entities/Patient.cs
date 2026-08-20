@@ -9,7 +9,7 @@ namespace HospitalManagement.Domain.Entities
     {
         public int PatientId { get; set; }
 
-        // FK -> Users.UserId (1:1, unique)
+        //FK -> Users.UserId (1:1, unique)
         public int UserId { get; set; }
         public User? User { get; set; }
 

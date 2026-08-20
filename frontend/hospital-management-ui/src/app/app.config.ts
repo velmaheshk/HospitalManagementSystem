@@ -1,5 +1,6 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+ import { provideRouter } from '@angular/router';
+// import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ApplicationConfig,provideBrowserGlobalErrorListeners } from '@angular/core';
 import {
   provideHttpClient,
   withInterceptors
@@ -15,5 +16,8 @@ export const appConfig: ApplicationConfig = {
      provideHttpClient(withInterceptors([authInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay())
+   // provideHttpClient(withFetch())
   ]
 };
+
+
