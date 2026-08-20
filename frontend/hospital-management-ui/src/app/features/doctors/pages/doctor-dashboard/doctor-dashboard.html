@@ -1,4 +1,4 @@
-<div class="dashboard">
+ <div class="dashboard">  
 
   <h1>Doctor Dashboard</h1>
 
@@ -30,4 +30,166 @@
 
   </div>
 
-</div>
+</div>  
+
+
+ <!-- <div class="container-fluid p-4">
+
+  <div class="d-flex justify-content-between
+              align-items-center mb-4">
+
+    <div>
+      <h2>Doctor Dashboard</h2>
+
+      <p class="text-muted">
+        Manage doctors and view statistics
+      </p>
+    </div>
+
+    <a
+      routerLink="/doctor/add"
+      class="btn btn-primary">
+
+      + Add Doctor
+
+    </a>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="text-center">
+      Loading dashboard...
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="alert alert-danger">
+
+      {{ errorMessage }}
+
+    </div>
+
+  }
+
+
+  @if (dashboard) {
+
+    <div class="row g-4">
+
+      <div class="col-md-3">
+
+        <div class="card shadow-sm">
+
+          <div class="card-body">
+
+            <h6>Total Doctors</h6>
+
+            <h2>
+              {{ dashboard.totalDoctors }}
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <div class="card shadow-sm">
+
+          <div class="card-body">
+
+            <h6>Active Doctors</h6>
+
+            <h2>
+              {{ dashboard.activeDoctors }}
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <div class="card shadow-sm">
+
+          <div class="card-body">
+
+            <h6>Inactive Doctors</h6>
+
+            <h2>
+              {{ dashboard.inactiveDoctors }}
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-3">
+
+        <div class="card shadow-sm">
+
+          <div class="card-body">
+
+            <h6>Specializations</h6>
+
+            <h2>
+              {{ dashboard.totalSpecializations }}
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <div class="card mt-4 shadow-sm">
+
+    <div class="card-body">
+
+      <h5>Quick Actions</h5>
+
+      <div class="d-flex gap-2">
+
+        <a
+          routerLink="/doctor/list"
+          class="btn btn-outline-primary">
+
+          View Doctors
+
+        </a>
+
+
+        <a
+          routerLink="/doctor/add"
+          class="btn btn-success">
+
+          Add Doctor
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>   -->

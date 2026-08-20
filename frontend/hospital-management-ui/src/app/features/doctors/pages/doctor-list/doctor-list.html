@@ -1,1 +1,210 @@
-<p>doctor-list works!</p>
+<div class="container-fluid p-4">
+
+  <div class="d-flex
+              justify-content-between
+              align-items-center
+              mb-4">
+
+    <div>
+
+      <h2>Doctors</h2>
+
+      <p class="text-muted">
+
+        Manage all hospital doctors
+
+      </p>
+
+    </div>
+
+
+    <a
+      routerLink="/doctor/add"
+      class="btn btn-primary">
+
+      + Add Doctor
+
+    </a>
+
+  </div>
+
+
+  <div class="card shadow-sm">
+
+    <div class="card-body">
+
+
+      <div class="mb-3">
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name, specialization or email"
+          (input)="searchDoctors($event)">
+
+      </div>
+
+
+      @if (loading) {
+
+        <div class="text-center p-4">
+
+          Loading doctors...
+
+        </div>
+
+      }
+
+
+      @if (!loading) {
+
+        <div class="table-responsive">
+
+          <table class="table table-hover">
+
+            <thead>
+
+              <tr>
+
+                <th>#</th>
+
+                <th>Doctor</th>
+
+                <th>Email</th>
+
+                <th>Phone</th>
+
+                <th>Specialization</th>
+
+                <th>Experience</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                doctor of filteredDoctors;
+                track doctor.id
+              ) {
+
+                <tr>
+
+                  <td>
+                    {{ doctor.id }}
+                  </td>
+
+
+                  <td>
+
+                    Dr.
+                    {{ doctor.firstName }}
+                    {{ doctor.lastName }}
+
+                  </td>
+
+
+                  <td>
+                    {{ doctor.email }}
+                  </td>
+
+
+                  <td>
+                    {{ doctor.phoneNumber }}
+                  </td>
+
+
+                  <td>
+                    {{ doctor.specialization }}
+                  </td>
+
+
+                  <td>
+
+                    {{ doctor.experienceYears }}
+                    Years
+
+                  </td>
+
+
+                  <td>
+
+                    @if (doctor.isActive) {
+
+                      <span class="badge text-bg-success">
+                        Active
+                      </span>
+
+                    }
+                    @else {
+
+                      <span class="badge text-bg-secondary">
+                        Inactive
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <td>
+
+                    <button
+                      class="btn btn-sm btn-outline-primary me-2"
+                      (click)="editDoctor(doctor.id)">
+
+                      Edit
+
+                    </button>
+
+
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteDoctor(doctor)">
+
+                      Delete
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              }
+
+
+              @if (filteredDoctors.length === 0) {
+
+                <tr>
+
+                  <td
+                    colspan="8"
+                    class="text-center p-4">
+
+                    No doctors found
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>
