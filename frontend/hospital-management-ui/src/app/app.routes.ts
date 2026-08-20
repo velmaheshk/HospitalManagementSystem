@@ -70,11 +70,11 @@ export const routes: Routes = [
   // =====================================================
 
   {
-    path: 'doctor/dashboard',
-
+    path: 'doctor',
+ 
     canActivate: [
       authGuard,
-      roleGuard(['Doctor'])
+      // roleGuard(['Doctor'])
     ],
 
     loadComponent: () =>
@@ -98,11 +98,11 @@ export const routes: Routes = [
   // =====================================================
 
   {
-    path: 'patient/dashboard',
+    path: 'patient',
 
     canActivate: [
       authGuard,
-      roleGuard(['Patient'])
+      // roleGuard(['Patient'])
     ],
 
     loadComponent: () =>
@@ -119,11 +119,11 @@ export const routes: Routes = [
   // =====================================================
 
   {
-    path: 'doctor/doctor-form',
+    path: 'doctor-add',
 
     canActivate: [
       authGuard,
-        roleGuard(['Doctor'])
+        // roleGuard(['Doctor'])
     ],
 
     loadComponent: () =>
@@ -134,11 +134,11 @@ export const routes: Routes = [
       )
   },
 {
-    path: 'doctor/doctor-list',
-
+    path: 'doctor-list',
+ 
     canActivate: [
       authGuard,
-        roleGuard(['Doctor'])
+        // roleGuard(['Doctor'])
     ],
 
     loadComponent: () =>
@@ -146,6 +146,15 @@ export const routes: Routes = [
         './features/doctors/pages/doctor-list/doctor-list'
       ).then(
         m => m.DoctorListComponent
+      )
+  },
+   {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import(
+       './features/doctors/pages/doctor-form/doctor-form'
+      ).then(
+        m => m.DoctorFormComponent
       )
   },
 // =====================================================
