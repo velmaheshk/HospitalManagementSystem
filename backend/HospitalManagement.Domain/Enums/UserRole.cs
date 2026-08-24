@@ -6,8 +6,8 @@ namespace HospitalManagement.Domain.Enums
 {
     public enum UserRole
     {
-        User = 1,
+        Admin = 1,
         Doctor = 2,
-        Admin = 3
+        Patient = 3
     }
 }

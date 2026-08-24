@@ -74,31 +74,52 @@ namespace HospitalManagement.Application.Services
             if (await EmailExistsAsync(dto.Email))
                 throw new InvalidOperationException("Email is already registered.");
 
-            var patientRole = await _context.Roles.FirstAsync(r => r.RoleName == "Patient");
+            // ✅ FIX: look up the role by the RoleId the client sent, not a hardcoded "Patient"
+            var role = await _context.Roles
+                .FirstOrDefaultAsync(r => r.RoleId == dto.RoleId);
+
+            if (role == null)
+                throw new InvalidOperationException($"Invalid RoleId: {dto.RoleId}");
 
             var user = new User
             {
                 Username = dto.Email,
                 PasswordHash = _hasher.Hash(dto.Password),
                 Email = dto.Email,
-               // Phone = dto.Phone,
-                RoleId = patientRole.RoleId,
+                // Phone = dto.Phone,
+                RoleId = role.RoleId,
                 IsActive = true,
             };
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            var patient = new Patient
+            // ✅ FIX: create the correct child record based on the role
+            if (role.RoleName == "Patient")
             {
-                UserId = user.UserId,
-                FullName = dto.FirstName+" "+dto.LastName,
-                DOB = DateTime.UtcNow.AddYears(-25), // placeholder — completed later via profile edit
-                Gender = "Unspecified",
-            };
-            await _context.Patients.AddAsync(patient);
+                var patient = new Patient
+                {
+                    UserId = user.UserId,
+                    FullName = dto.FirstName + " " + dto.LastName,
+                    DOB = DateTime.UtcNow.AddYears(-25), // placeholder — completed later via profile edit
+                    Gender = "Unspecified",
+                };
+                await _context.Patients.AddAsync(patient);
+            }
+            else if (role.RoleName == "Doctor")
+            {
+                var doctor = new Doctor
+                {
+                    UserId = user.UserId,
+                    FullName = dto.FirstName + " " + dto.LastName,
+                    DepartmentId = 1, // ⚠️ placeholder — replace with real value or make selectable at registration
+                };
+                await _context.Doctors.AddAsync(doctor);
+            }
+            // Admin: no child profile table needed
+
             await _context.SaveChangesAsync();
 
-            user.Role = patientRole;
+            user.Role = role;
             return await IssueTokensAsync(user);
         }
 
