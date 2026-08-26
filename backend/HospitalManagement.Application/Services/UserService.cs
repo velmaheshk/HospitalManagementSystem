@@ -10,8 +10,8 @@ namespace HospitalManagement.Application.Services
         private readonly IPasswordHasher _hasher;
         public UserService(IApplicationDbContext context, IPasswordHasher hasher)
         {
-             _context = context;
-             _hasher = hasher;
+            _context = context;
+            _hasher = hasher;
         }
 
         private static UserDto ToDto(User u) => new(
@@ -40,6 +40,59 @@ namespace HospitalManagement.Application.Services
             await _context.SaveChangesAsync();
 
             return new UserDto(user.UserId, user.Username, user.Email, user.Phone, role.RoleName, user.IsActive, user.CreatedAt);
+        }
+
+        public async Task<UserDto?> UpdateAsync(
+            int id,
+            UpdateUserRequest request)
+        {
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user is null)
+                return null;
+
+            // Check duplicate username
+            var usernameExists = await _context.Users
+                .AnyAsync(u =>
+                    u.UserId != id &&
+                    u.Username == request.Username);
+
+            if (usernameExists)
+            {
+                throw new InvalidOperationException(
+                    "Username already exists.");
+            }
+
+            // Check duplicate email
+            var emailExists = await _context.Users
+                .AnyAsync(u =>
+                    u.UserId != id &&
+                    u.Email == request.Email);
+
+            if (emailExists)
+            {
+                throw new InvalidOperationException(
+                    "Email already exists.");
+            }
+
+            // Update user
+            user.Username = request.Username;
+            user.Email = request.Email;
+            user.Phone = request.Phone;
+            user.RoleId= (await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == request.Role))?.RoleId ?? user.RoleId;
+            await _context.SaveChangesAsync();
+
+            return new UserDto(
+         user.UserId,
+         user.Username,
+         user.Email,
+         user.Phone,
+         user.Role?.RoleName ?? string.Empty,
+         user.IsActive,
+         user.CreatedAt
+     );
         }
 
         public async Task<List<UserDto>> GetAllAsync() =>

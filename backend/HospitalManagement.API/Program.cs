@@ -17,14 +17,14 @@ using HospitalManagement.Domain.Interface.IRepository;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddAutoMapper(
     cfg => { },
     typeof(AppointmentProfile).Assembly);
@@ -118,7 +118,14 @@ builder.Services
 
 
 // Authorization
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+    // or policy.RequireClaim("role", "Admin");
+    // or a custom requirement
+});
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
