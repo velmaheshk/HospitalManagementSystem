@@ -1,324 +1,285 @@
-import { Component,OnInit,inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-
-import {
-  DoctorApiService
-} from '../../../../core/services/doctor-api.service';
-
-import {
-  Doctor
-} from '../../../../core/models/doctor.model';
+import { Router, RouterLink } from '@angular/router';
+import { CreateDoctorRequest } from '../../../../core/models/create-doctor-request.model';
+import { DoctorApiService } from '../../../../core/services/doctor-api.service';
 
 @Component({
   selector: 'app-doctor-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './doctor-form.html',
   styleUrl: './doctor-form.scss'
 })
-export class DoctorFormComponent implements OnInit{
+export class DoctorFormComponent implements OnInit {
 
-  private readonly fb =
-    inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly doctorService = inject(DoctorApiService);
 
-  private readonly doctorService =
-    inject(DoctorApiService);
-
-  private readonly route =
-    inject(ActivatedRoute);
-
-  private readonly router =
-    inject(Router);
-
-  doctorId: number | null = null;
-
-  isEditMode = false;
+  doctorForm!: FormGroup;
 
   loading = false;
-
+  saving = false;
   submitted = false;
 
-
-  doctorForm = this.fb.group({
-
-    firstName: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(2)
-      ]
-    ],
-
-    lastName: [
-      '',
-      [
-        Validators.required
-      ]
-    ],
-
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email
-      ]
-    ],
-
-    phoneNumber: [
-      '',
-      [
-        Validators.required
-      ]
-    ],
-
-    specialization: [
-      '',
-      [
-        Validators.required
-      ]
-    ],
-
-    qualification: [
-      ''
-    ],
-
-    experienceYears: [
-      0,
-      [
-        Validators.min(0)
-      ]
-    ],
-
-    consultationFee: [
-      0,
-      [
-        Validators.min(0)
-      ]
-    ],
-
-    departmentId: [
-      0
-    ],
-
-    isActive: [
-      true
-    ]
-
-  });
-
-
   ngOnInit(): void {
-
-    const id =
-      this.route.snapshot.paramMap
-        .get('id');
-
-    if (id) {
-
-      this.doctorId = +id;
-
-      this.isEditMode = true;
-
-      this.loadDoctor(
-        this.doctorId
-      );
-    }
-
+    this.createForm();
   }
 
+  private createForm(): void {
+    this.doctorForm = this.fb.group({
 
-  loadDoctor(id: number): void {
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50)
+        ]
+      ],
 
-    this.loading = true;
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50)
+        ]
+      ],
 
-    this.doctorService
-      .getById(id)
-      .subscribe({
+      gender: [
+        '',
+        Validators.required
+      ],
 
-        next: (doctor) => {
+      dateOfBirth: [
+        ''
+      ],
 
-          this.doctorForm.patchValue({
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[6-9]\d{9}$/)
+        ]
+      ],
 
-            firstName:
-              doctor.firstName,
+      
 
-            lastName:
-              doctor.lastName,
+username: [
+  '',
+  [
+    Validators.required,
+    Validators.email
+  ]
+],
 
-            email:
-              doctor.email,
+password: [
+  '',
+  [
+    Validators.required,
+    Validators.minLength(6)
+  ]
+],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
 
-            phoneNumber:
-              doctor.phoneNumber,
+      medicalLicenseNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(50)
+        ]
+      ],
 
-            specialization:
-              doctor.specialization,
+      specialization: [
+        '',
+        [
+          Validators.required
+        ]
+      ],
 
-            qualification:
-              doctor.qualification ?? '',
+      departmentId: [
+        null,
+        [
+          Validators.required
+        ]
+      ],
 
-            experienceYears:
-              doctor.experienceYears ?? 0,
+      qualification: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(200)
+        ]
+      ],
 
-            consultationFee:
-              doctor.consultationFee ?? 0,
+      yearsOfExperience: [
+        0,
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(60)
+        ]
+      ],
 
-            departmentId:
-              doctor.departmentId ?? 0,
+      consultationFee: [
+        0,
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
+      ],
 
-            isActive:
-              doctor.isActive
-          });
+      address: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(500)
+        ]
+      ],
 
-          this.loading = false;
-        },
+      city: [
+        '',
+        [
+          Validators.required
+        ]
+      ],
 
-        error: () => {
+      state: [
+        '',
+        [
+          Validators.required
+        ]
+      ],
 
-          this.loading = false;
+      pincode: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\d{6}$/)
+        ]
+      ],
 
-          alert(
-            'Unable to load doctor details'
-          );
+      bio: [
+        '',
+        [
+          Validators.maxLength(1000)
+        ]
+      ],
 
-        }
-
-      });
-
+      status: [
+        'Active',
+        Validators.required
+      ]
+    });
   }
 
+  get f() {
+    return this.doctorForm.controls;
+  }
 
-  save(): void {
+  isInvalid(controlName: string): boolean {
+    const control = this.doctorForm.get(controlName);
+
+    return !!(
+      control &&
+      control.invalid &&
+      (control.touched || this.submitted)
+    );
+  }
+
+  saveDoctor(): void {
 
     this.submitted = true;
 
-    if (
-      this.doctorForm.invalid
-    ) {
-
+    if (this.doctorForm.invalid) {
       this.doctorForm.markAllAsTouched();
-
       return;
-
     }
 
+    this.saving = true;
 
-    this.loading = true;
+    const formValue  = this.doctorForm.getRawValue();
+const request = {
+  fullName: `${formValue.firstName} ${formValue.lastName}`.trim(),
 
-    const doctor =
-      this.doctorForm
-        .getRawValue() as Doctor;
+  specialization: formValue.specialization,
+  qualification: formValue.qualification,
 
+  experienceYears: Number(formValue.yearsOfExperience),
 
-    if (
-      this.isEditMode &&
-      this.doctorId
-    ) {
+  consultationFee: Number(formValue.consultationFee),
 
-      doctor.id =
-        this.doctorId;
+  departmentId: Number(formValue.departmentId),
 
-      this.updateDoctor(
-        doctor
-      );
+  username: formValue.username,
+  password: formValue.password,
 
-    }
-    else {
+  email: formValue.email,
 
-      this.createDoctor(
-        doctor
-      );
+  phone: formValue.phoneNumber
+};
 
-    }
+console.log('Doctor API Request:', request);
 
+    this.doctorService.create(request).subscribe({
+
+      next: () => {
+
+        this.saving = false;
+
+        alert('Doctor created successfully.');
+
+        this.router.navigate(['/doctor/list']);
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Failed to create doctor',
+          error
+        );
+
+        this.saving = false;
+
+        alert(
+          error?.error?.message ??
+          'Unable to create doctor. Please try again.'
+        );
+      }
+    });
   }
 
+  resetForm(): void {
 
-  createDoctor(
-    doctor: Doctor
-  ): void {
+    this.submitted = false;
 
-    this.doctorService
-      .create(doctor)
-      .subscribe({
-
-        next: () => {
-
-          this.router.navigate([
-            '/doctor/list'
-          ]);
-
-        },
-
-        error: (error) => {
-
-          console.error(error);
-
-          this.loading = false;
-
-        }
-
-      });
-
+    this.doctorForm.reset({
+      gender: '',
+      yearsOfExperience: 0,
+      consultationFee: 0,
+      status: 'Active'
+    });
   }
-
-
-  updateDoctor(
-    doctor: Doctor
-  ): void {
-
-    this.doctorService
-      .update(
-        this.doctorId!,
-        doctor
-      )
-      .subscribe({
-
-        next: () => {
-
-          this.router.navigate([
-            '/doctor/list'
-          ]);
-
-        },
-
-        error: (error) => {
-
-          console.error(error);
-
-          this.loading = false;
-
-        }
-
-      });
-
-  }
-
 
   cancel(): void {
-
-    this.router.navigate([
-      '/doctor/list'
-    ]);
-
+    this.router.navigate(['/doctor/list']);
   }
-
-
-  get f() {
-
-    return this.doctorForm.controls;
-
-  }
-
 }

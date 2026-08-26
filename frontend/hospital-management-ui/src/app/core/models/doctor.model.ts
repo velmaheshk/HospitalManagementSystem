@@ -1,22 +1,32 @@
 export interface Doctor {
-  id: number;
-
+   id?: number;
+   doctorId: number;
+   userId: number;
   firstName: string;
   lastName: string;
-
   fullName?: string;
-
   email: string;
-  phoneNumber: string;
-
-  specialization: string;
-
+  phone?: string;
+  phoneNumber?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  profileImage?: string;
+  medicalLicenseNumber?: string;
+  specialization?: string;
+  specializationId?: number;
+  specializationName?: string;
+  department?: string;
+  departmentName?: string;
+  departmentId?: number;
   qualification?: string;
   experienceYears?: number;
-
+  yearsOfExperience?: number;
   consultationFee?: number;
-
-  departmentId?: number;
-
-  isActive: boolean;
+  address?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  bio?: string;
+  status?: string;
+  isActive?: boolean;
 }
