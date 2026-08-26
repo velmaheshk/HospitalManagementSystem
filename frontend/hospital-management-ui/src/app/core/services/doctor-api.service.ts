@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments';
- 
+ import { CreateDoctorRequest } from '../models/create-doctor-request.model';
 import {
   Doctor
 } from '../models/doctor.model';
@@ -17,50 +17,55 @@ export class DoctorApiService {
    
 
   constructor(
-    private http: HttpClient
+    private readonly http: HttpClient
   ) {}
 
-  getAll(): Observable<Doctor[]> {
-    return this.http.get<Doctor[]>(
-      this.apiUrl
-    );
-  }
+ getDoctors(): Observable<Doctor[]> {
+   return this.http.get<Doctor[]>(this.apiUrl);
+ }
 
-  getById(id: number): Observable<Doctor> {
-    return this.http.get<Doctor>(
-      `${this.apiUrl}/${id}`
-    );
-  }
+ getAll(): Observable<Doctor[]> {
+   return this.getDoctors();
+ }
 
-  create(doctor: Doctor): Observable<Doctor> {
-    return this.http.post<Doctor>(
-      this.apiUrl,
-      doctor
-    );
-  }
+  getDoctorById(id: number): Observable<Doctor> {
+   return this.http.get<Doctor>(`${this.apiUrl}/${id}`);
+ }
 
-  update(
-    id: number,
-    doctor: Doctor
-  ): Observable<void> {
+ getById(id: number): Observable<Doctor> {
+   return this.getDoctorById(id);
+ }
 
-    return this.http.put<void>(
-      `${this.apiUrl}/${id}`,
-      doctor
-    );
-  }
+  createDoctor(request: Doctor): Observable<Doctor> {
+   return this.http.post<Doctor>(this.apiUrl, request);
+ }
 
-  delete(id: number): Observable<void> {
+//  create(doctor: Doctor): Observable<Doctor> {
+//    return this.createDoctor(doctor);
+//  }
+create(request: CreateDoctorRequest) {
+  return this.http.post<Doctor>(
+    this.apiUrl,
+    request
+  );
+}
+   updateDoctor(id: number, request: Doctor): Observable<void> {
+   return this.http.put<void>(`${this.apiUrl}/${id}`, request);
+ }
 
-    return this.http.delete<void>(
-      `${this.apiUrl}/${id}`
-    );
-  }
+ update(id: number, doctor: Doctor): Observable<void> {
+   return this.updateDoctor(id, doctor);
+ }
 
-  getDashboard(): Observable<doctordashboard> {
+ deleteDoctor(id: number): Observable<void> {
+   return this.http.delete<void>(`${this.apiUrl}/${id}`);
+ }
 
-    return this.http.get<doctordashboard>(
-      `${this.apiUrl}/dashboard`
-    );
-  }
+ delete(id: number): Observable<void> {
+   return this.deleteDoctor(id);
+ }
+
+ getDashboard(): Observable<doctordashboard> {
+   return this.http.get<doctordashboard>(`${this.apiUrl}/dashboard`);
+ }
 }

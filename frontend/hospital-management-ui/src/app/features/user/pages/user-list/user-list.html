@@ -1,0 +1,219 @@
+<div class="container-fluid">
+
+  <div class="page-header">
+
+    <div>
+      <h2>User Management</h2>
+
+      <p>
+        Manage application users and roles
+      </p>
+    </div>
+
+    <a
+      routerLink="/users/add"
+      class="btn btn-primary">
+
+      + Add User
+
+    </a>
+
+  </div>
+
+
+  <!-- Search -->
+
+  <div class="card search-card">
+
+    <div class="search-row">
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search username, email, phone or role..."
+        [(ngModel)]="searchText"
+        (input)="searchUsers()"
+      />
+
+      <button
+        class="btn btn-secondary"
+        (click)="searchText=''; searchUsers()">
+
+        Clear
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- Error -->
+
+  @if (errorMessage) {
+
+    <div class="alert alert-danger">
+
+      {{ errorMessage }}
+
+    </div>
+
+  }
+
+
+  <!-- Loading -->
+
+  @if (loading) {
+
+    <div class="loading">
+
+      Loading users...
+
+    </div>
+
+  }
+
+
+  <!-- User Table -->
+
+  @if (!loading) {
+
+    <div class="card">
+
+      <div class="table-responsive">
+
+        <table class="table">
+
+          <thead>
+
+            <tr>
+
+              <th>#</th>
+
+              <th>Username</th>
+
+              <th>Email</th>
+
+              <th>Phone</th>
+
+              <th>Role</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              user of filteredUsers;
+              track user.userId;
+              let i = $index
+            ) {
+
+              <tr>
+
+                <td>
+                  {{ i + 1 }}
+                </td>
+
+                <td>
+                  <strong>
+                    {{ user.username }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ user.email }}
+                </td>
+
+                <td>
+                  {{ user.phone || '-' }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="role-badge"
+                    [class.admin]="
+                      user.role.toLowerCase() === 'admin'
+                    "
+                    [class.doctor]="
+                      user.role.toLowerCase() === 'doctor'
+                    "
+                    [class.user]="
+                      user.role.toLowerCase() === 'user'
+                    ">
+
+                    {{ user.role }}
+
+                  </span>
+
+                </td>
+
+                <td>
+
+                  <div class="actions">
+
+                    <button
+                      class="btn btn-info"
+                      (click)="viewUser(user.userId!)">
+
+                      View
+
+                    </button>
+
+                    <button
+                      class="btn btn-warning"
+                      (click)="editUser(user.userId!)">
+
+                      Edit
+
+                    </button>
+
+                    <button
+                      class="btn btn-danger"
+                      (click)="deleteUser(user)">
+
+                      Delete
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            @if (filteredUsers.length === 0) {
+
+              <tr>
+
+                <td
+                  colspan="6"
+                  class="no-data">
+
+                  No users found.
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

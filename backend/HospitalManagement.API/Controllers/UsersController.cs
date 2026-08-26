@@ -7,7 +7,7 @@ using HospitalManagement.Application.DTOs;
 namespace HospitalManagement.API.Controllers
 {
     [Route("api/users")]
-    [Authorize(Policy = "AdminOnly")]
+    //[Authorize(Policy = "AdminOnly")]
     [Produces("application/json")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -45,6 +45,74 @@ namespace HospitalManagement.API.Controllers
 
             return Ok(user);
         }
+
+        // POST: api/User
+        [HttpPost]
+         //[Authorize(Policy = "AdminOnly")]
+        public async Task<ActionResult<UserDto>> Create(
+             CreateUserRequest request)
+        {
+            try
+            {
+
+                var user = await _userService.CreateAsync(request);
+
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new { id = user.UserId },
+                    user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        // PUT: api/User/5
+        [HttpPut("{id:int}")]
+      //  [Authorize(Policy = "AdminOnly")]
+        public async Task<ActionResult<UserDto>> Update(
+            int id,
+              UpdateUserRequest request)
+        {
+            try
+            {
+                var user = await _userService.UpdateAsync(id, request);
+
+                if (user is null)
+                    return NotFound(new
+                    {
+                        message = $"User with ID {id} was not found."
+                    });
+
+                return Ok(user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
 
         /// <summary>Enable or disable a user account (disabled accounts cannot log in).</summary>
         /// <response code="204">Status updated successfully.</response>

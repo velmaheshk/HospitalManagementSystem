@@ -8,197 +8,132 @@ export const routes: Routes = [
   // =====================================================
   // DEFAULT
   // =====================================================
-
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
 
-
   // =====================================================
   // AUTH
   // =====================================================
-
   {
     path: 'login',
-
     loadComponent: () =>
-      import(
-        './features/auth/pages/login/login'
-      ).then(
+      import('./features/auth/pages/login/login').then(
         m => m.LoginComponent
       )
   },
-
-
   {
     path: 'register',
-
     loadComponent: () =>
-      import(
-        './features/auth/pages/register/register'
-      ).then(
+      import('./features/auth/pages/register/register').then(
         m => m.RegisterComponent
       )
   },
 
-
   // =====================================================
   // ADMIN DASHBOARD
   // =====================================================
-
   {
     path: 'dashboard',
-
-    canActivate: [
-      authGuard,
-      roleGuard(['Admin'])
-    ],
-
+    canActivate: [authGuard, roleGuard(['Admin'])],
     loadComponent: () =>
-      import(
-        './features/dashboard/pages/dashboard/dashboard'
-      ).then(
+      import('./features/dashboard/pages/dashboard/dashboard').then(
         m => m.DashboardComponent
       )
   },
 
-
   // =====================================================
-  // DOCTOR DASHBOARD
+  // DOCTOR MODULE
   // =====================================================
-
   {
     path: 'doctor',
- 
     canActivate: [
       authGuard,
-      // roleGuard(['Doctor'])
+      // roleGuard(['Doctor'])   // enable once Doctor role claim is in place
     ],
-
-    loadComponent: () =>
-      import(
-        './features/doctors/pages/doctor-dashboard/doctor-dashboard'
-      ).then(
-        m => m.DoctorDashboardComponent
-      )
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/doctors/pages/doctor-dashboard/doctor-dashboard').then(
+            m => m.DoctorDashboardComponent
+          )
+      },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('./features/doctors/pages/doctor-list/doctor-list').then(
+            m => m.DoctorListComponent
+          )
+      },
+      {
+        path: 'add',
+        loadComponent: () =>
+          import('./features/doctors/pages/doctor-form/doctor-form').then(
+            m => m.DoctorFormComponent
+          )
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./features/doctors/pages/doctor-form/doctor-form').then(
+            m => m.DoctorFormComponent
+          )
+      }
+    ]
   },
 
-    {
+  // =====================================================
+  // PATIENT MODULE
+  // =====================================================
+  {
     path: 'patient',
+    canActivate: [authGuard],
     loadChildren: () =>
-      import('./patient/patient.routes')
-        .then(m => m.patientRoutes)
+      import('./patient/patient.routes').then(m => m.patientRoutes)
   },
 
-
   // =====================================================
-  // PATIENT / NORMAL USER DASHBOARD
+  // USER MODULE
   // =====================================================
-
   {
-    path: 'patient',
-
-    canActivate: [
-      authGuard,
-      // roleGuard(['Patient'])
-    ],
-
-    loadComponent: () =>
-      import(
-        './features/patients/pages/patient-dashboard/patient-dashboard'
-      ).then(
-        m => m.PatientDashboardComponent
-      )
+    path: 'users',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/user/pages/user.routes').then(m => m.USER_ROUTES)
   },
-  
 
   // =====================================================
-  // DOCTORS
+  // REPORTS
   // =====================================================
+ {
+  path: 'report',
 
-  {
-    path: 'doctor-add',
-
-    canActivate: [
-      authGuard,
-        // roleGuard(['Doctor'])
-    ],
-
-    loadComponent: () =>
-      import(
-        './features/doctors/pages/doctor-form/doctor-form'
-      ).then(
-        m => m.DoctorFormComponent
-      )
-  },
-{
-    path: 'doctor-list',
- 
-    canActivate: [
-      authGuard,
-        // roleGuard(['Doctor'])
-    ],
-
-    loadComponent: () =>
-      import(
-        './features/doctors/pages/doctor-list/doctor-list'
-      ).then(
-        m => m.DoctorListComponent
-      )
-  },
-   {
-    path: 'edit/:id',
-    loadComponent: () =>
-      import(
-       './features/doctors/pages/doctor-form/doctor-form'
-      ).then(
-        m => m.DoctorFormComponent
-      )
-  },
-// =====================================================
-  // Reports
-  // =====================================================
-
-  {
-    path: 'report',
-
-    canActivate: [
-      authGuard,
-       
-    ],
-
-    loadComponent: () =>
-      import(
-        './features/reports/pages/report-list/report-list'
-      ).then(
+  canActivate: [
+    authGuard,
+    // roleGuard(['Admin'])
+  ],
+ loadComponent: () =>
+      import('./features/reports/pages/report-list/report-list').then(
         m => m.ReportListComponent
       )
-  },
+  // loadComponent: () =>
+  //   import(
+  //     './features/reports/pages/report-list/report-list'
+  //   ).then(
+  //     m => m.ReportListComponent
+  //   )
+},
+
   // =====================================================
   // FALLBACK
   // =====================================================
-
   {
     path: '**',
     redirectTo: 'login'
   }
 
 ];
-// export const routes: Routes = [
-
-//   {
-//     path: 'patient',
-//     loadChildren: () =>
-//       import('./patient/patient.routes')
-//         .then(m => m.patientRoutes)
-//   },
-
-//   {
-//     path: '',
-//     redirectTo: 'patient',
-//     pathMatch: 'full'
-//   }
-
-// ];

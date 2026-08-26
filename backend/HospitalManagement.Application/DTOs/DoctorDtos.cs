@@ -14,6 +14,7 @@ namespace HospitalManagement.Application.DTOs
     public record UserDto(int UserId, string Username, string Email, string? Phone, string Role, bool IsActive, DateTime CreatedAt);
     public record UpdateUserStatusRequest(bool IsActive);
     public record CreateUserRequest(string Username, string Password, string Email, string? Phone, string Role);
+    public record UpdateUserRequest(string Username, string Email, string? Phone, string Role);
     public record DoctorDto(
       int DoctorId,
       int UserId,
@@ -25,17 +26,17 @@ namespace HospitalManagement.Application.DTOs
       int DepartmentId,
       string? DepartmentName);
 
-     public record CreateDoctorRequest(
-      string FullName,
-      string Specialization,
-      string? Qualification,
-      int? ExperienceYears,
-      decimal ConsultationFee,
-      int DepartmentId,
-      string Username,
-      string Password,
-      string Email,
-      string? Phone);
+    public record CreateDoctorRequest(
+     string FullName,
+     string Specialization,
+     string? Qualification,
+     int? ExperienceYears,
+     decimal ConsultationFee,
+     int DepartmentId,
+     string Username,
+     string Password,
+     string Email,
+     string? Phone);
 
     public record UpdateDoctorRequest(
        string FullName,
@@ -49,4 +50,14 @@ namespace HospitalManagement.Application.DTOs
     public record RevenueReportItem(string Period, decimal Revenue);
     public record AppointmentStatusReportItem(string Status, int Count);
     public record DashboardSummaryDto(int TotalPatients, int TodaysAppointments, decimal RevenueThisMonth, int LowStockCount);
+
+    //Doctor Dashboard
+    public class DoctorDashboardDto
+    {
+        public int TotalDoctors { get; set; }
+        public int ActiveDoctors { get; set; }
+        public int InactiveDoctors { get; set; }
+        public int TotalSpecializations { get; set; }
+    }
 }
+

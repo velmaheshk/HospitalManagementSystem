@@ -1,195 +1,105 @@
- <div class="dashboard">  
-
-  <h1>Doctor Dashboard</h1>
-
-  <p>
-    Welcome to Hospital Management System
-  </p>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>My Appointments</h3>
-      <p>Manage today's appointments</p>
-    </div>
-
-    <div class="card">
-      <h3>My Patients</h3>
-      <p>View assigned patients</p>
-    </div>
-
-    <div class="card">
-      <h3>Prescriptions</h3>
-      <p>Create and manage prescriptions</p>
-    </div>
-
-    <div class="card">
-      <h3>Availability</h3>
-      <p>Manage your availability</p>
-    </div>
-
-  </div>
-
-</div>  
-
-
- <!-- <div class="container-fluid p-4">
-
-  <div class="d-flex justify-content-between
-              align-items-center mb-4">
-
+<section class="doctor-dashboard-container">
+  <header class="dashboard-header">
     <div>
-      <h2>Doctor Dashboard</h2>
-
-      <p class="text-muted">
-        Manage doctors and view statistics
-      </p>
+      <p class="eyebrow">Doctor Management</p>
+      <h1>Doctor Management</h1>
+      <p class="subtitle">Manage doctors, specializations and availability</p>
     </div>
-
-    <a
-      routerLink="/doctor/add"
-      class="btn btn-primary">
-
-      + Add Doctor
-
-    </a>
-
-  </div>
-
+  </header>
 
   @if (loading) {
-
-    <div class="text-center">
-      Loading dashboard...
-    </div>
-
+    <div class="loading-state">Loading dashboard...</div>
   }
-
 
   @if (errorMessage) {
-
-    <div class="alert alert-danger">
-
-      {{ errorMessage }}
-
-    </div>
-
+    <div class="alert-box">{{ errorMessage }}</div>
   }
-
 
   @if (dashboard) {
-
-    <div class="row g-4">
-
-      <div class="col-md-3">
-
-        <div class="card shadow-sm">
-
-          <div class="card-body">
-
-            <h6>Total Doctors</h6>
-
-            <h2>
-              {{ dashboard.totalDoctors }}
-            </h2>
-
-          </div>
-
+    <div class="summary-grid">
+      <article class="summary-card">
+        <div class="summary-icon">👩‍⚕️</div>
+        <div>
+          <span>Total Doctors</span>
+          <strong>{{ dashboard.totalDoctors }}</strong>
         </div>
+      </article>
 
-      </div>
-
-
-      <div class="col-md-3">
-
-        <div class="card shadow-sm">
-
-          <div class="card-body">
-
-            <h6>Active Doctors</h6>
-
-            <h2>
-              {{ dashboard.activeDoctors }}
-            </h2>
-
-          </div>
-
+      <article class="summary-card">
+        <div class="summary-icon">✅</div>
+        <div>
+          <span>Active Doctors</span>
+          <strong>{{ dashboard.activeDoctors }}</strong>
         </div>
+      </article>
 
-      </div>
-
-
-      <div class="col-md-3">
-
-        <div class="card shadow-sm">
-
-          <div class="card-body">
-
-            <h6>Inactive Doctors</h6>
-
-            <h2>
-              {{ dashboard.inactiveDoctors }}
-            </h2>
-
-          </div>
-
+      <article class="summary-card">
+        <div class="summary-icon">⏳</div>
+        <div>
+          <span>Inactive Doctors</span>
+          <strong>{{ dashboard.inactiveDoctors }}</strong>
         </div>
+      </article>
 
-      </div>
-
-
-      <div class="col-md-3">
-
-        <div class="card shadow-sm">
-
-          <div class="card-body">
-
-            <h6>Specializations</h6>
-
-            <h2>
-              {{ dashboard.totalSpecializations }}
-            </h2>
-
-          </div>
-
+      <article class="summary-card">
+        <div class="summary-icon">🩺</div>
+        <div>
+          <span>Specializations</span>
+          <strong>{{ dashboard.totalSpecializations }}</strong>
         </div>
-
-      </div>
-
+      </article>
     </div>
-
   }
 
-
-  <div class="card mt-4 shadow-sm">
-
-    <div class="card-body">
-
-      <h5>Quick Actions</h5>
-
-      <div class="d-flex gap-2">
-
-        <a
-          routerLink="/doctor/list"
-          class="btn btn-outline-primary">
-
-          View Doctors
-
-        </a>
-
-
-        <a
-          routerLink="/doctor/add"
-          class="btn btn-success">
-
-          Add Doctor
-
-        </a>
-
-      </div>
-
+  <div class="quick-actions-panel">
+    <h2>Quick actions</h2>
+    <div class="quick-actions">
+      <a routerLink="/doctor/list" class="action-button secondary">View Doctors</a>
+      <a routerLink="/doctor/add" class="action-button primary">Add Doctor</a>
     </div>
-
   </div>
 
-</div>   -->
+  <div class="recent-doctors-panel">
+    <div class="panel-header">
+      <h2>Recent doctors</h2>
+    </div>
+
+    @if (recentDoctors.length) {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Doctor Name</th>
+              <th>Specialization</th>
+              <th>Department</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (doctor of recentDoctors; track doctor.id) {
+              <tr>
+                <td>{{ doctor.fullName }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>{{ doctor.department }}</td>
+                <td>{{ doctor.phone }}</td>
+                <td>
+                  <span class="status-badge" [class.active]="doctor.status === 'Active'">
+                    {{ doctor.status }}
+                  </span>
+                </td>
+                <td class="row-actions">
+                  <a [routerLink]="['/doctor/list']" class="text-link">View</a>
+                  <a [routerLink]="['/doctor/edit', doctor.id]" class="text-link">Edit</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="empty-state">No recent doctors available.</div>
+    }
+  </div>
+</section>
