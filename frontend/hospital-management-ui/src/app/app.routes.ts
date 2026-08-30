@@ -31,7 +31,19 @@ export const routes: Routes = [
         m => m.RegisterComponent
       )
   },
-
+{
+  path: 'forgot-password',
+  loadComponent: () =>
+    import('./features/auth/pages/forgot-password/forgot-password').then(
+      m => m.ForgotPassword
+    )
+},{
+  path: 'reset-password',
+  loadComponent: () =>
+    import('./features/auth/pages/reset-password/reset-password').then(
+      m => m.ResetPassword
+    )
+},
   // =====================================================
   // ADMIN DASHBOARD
   // =====================================================

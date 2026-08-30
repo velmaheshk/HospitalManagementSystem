@@ -14,3 +14,15 @@ git add .
 git commit -m "Initial project structure"
 
 git push origin main
+
+
+---------------------
+
+any Issues faced for code changes.then use follow.
+ 
+git pull origin main
+--getting error
+git stash
+git pull origin main
+--Already to update.
+git stash pop
