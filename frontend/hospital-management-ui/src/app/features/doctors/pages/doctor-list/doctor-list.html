@@ -155,23 +155,23 @@
 
                   <td>
 
-                    <button
-                      class="btn btn-sm btn-outline-primary me-2"
-                      (click)="editDoctor(doctor.id)">
-
-                      Edit
-
-                    </button>
+                   <a
+  [routerLink]="doctor.id != null ? ['/doctor/edit', doctor.id] : null">
+  Edit
+</a>
 
 
-                    <button
+                    <!-- <button
                       class="btn btn-sm btn-outline-danger"
                       (click)="deleteDoctor(doctor)">
 
                       Delete
 
-                    </button>
-
+                    </button> -->
+<a
+  [routerLink]="doctor.id != null ? ['/doctor/delete', doctor.id] : null">
+  Delete
+</a>
                   </td>
 
                 </tr>

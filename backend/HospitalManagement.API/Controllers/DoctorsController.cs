@@ -8,7 +8,7 @@ namespace HospitalManagement.API.Controllers
 {
     [Route("api/doctors")]
     [ApiController]
-    [Authorize] // all endpoints require a valid JWT by default; overridden per-action below
+   // [Authorize] // all endpoints require a valid JWT by default; overridden per-action below
     [Produces("application/json")]
     public class DoctorsController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous] // doctor directory is public so patients can browse before logging in
+      //  [AllowAnonymous] // doctor directory is public so patients can browse before logging in
         [ProducesResponseType(typeof(List<DoctorDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<List<DoctorDto>>> GetAll()
         {
@@ -31,7 +31,7 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DoctorDto>> GetById(int id)
@@ -44,10 +44,10 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdminOnly")]
+      //  [Authorize(Policy = "AdminOnly")]
         [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<DoctorDto>> Create([FromBody] CreateDoctorRequest request)
+        public async Task<ActionResult<DoctorDto>> Create(  CreateDoctorRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -66,7 +66,7 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [Authorize(Policy = "AdminOnly")]
+      //  [Authorize(Policy = "AdminOnly")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateDoctorRequest request)
@@ -82,7 +82,7 @@ namespace HospitalManagement.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [Authorize(Policy = "AdminOnly")]
+      //  [Authorize(Policy = "AdminOnly")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
@@ -93,6 +93,12 @@ namespace HospitalManagement.API.Controllers
 
             _logger.LogWarning("Doctor {DoctorId} deleted by {User}", id, User.Identity?.Name);
             return NoContent();
+        }
+
+        [HttpGet("dashboard")]
+        public async Task<ActionResult<DoctorDashboardDto>> GetDashboard()
+        {
+            return Ok(await _doctorService.GetDashboardAsync());
         }
     }
 }

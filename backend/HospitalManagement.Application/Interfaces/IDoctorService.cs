@@ -12,5 +12,7 @@ namespace HospitalManagement.Application.Interfaces
         Task<DoctorDto> CreateAsync(CreateDoctorRequest request);
         Task<bool> UpdateAsync(int id, UpdateDoctorRequest request);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<DoctorDto>> GetDoctorsBySpecializationAsync(string specialization);
+        Task<DoctorDashboardDto> GetDashboardAsync();
     }
 }

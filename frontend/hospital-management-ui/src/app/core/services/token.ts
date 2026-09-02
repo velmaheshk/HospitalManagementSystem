@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-
+import { inject } from '@angular/core';
+ 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
   private readonly accessTokenKey = 'accessToken';
   private readonly refreshTokenKey = 'refreshToken';
-
+  
   setTokens(
     accessToken: string,
     refreshToken: string
@@ -24,9 +25,9 @@ export class TokenService {
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem(
-      this.accessTokenKey
-    );
+    return  localStorage.getItem(
+       this.accessTokenKey
+     );
   }
 
   getRefreshToken(): string | null {

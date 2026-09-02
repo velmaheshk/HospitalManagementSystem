@@ -1,0 +1,145 @@
+<div class="container">
+
+  <div class="header">
+
+    <div>
+
+      <h2>User Details</h2>
+
+      <p>
+        View user information
+      </p>
+
+    </div>
+
+    <a
+      routerLink="/users"
+      class="btn btn-secondary">
+
+      Back
+
+    </a>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="loading">
+      Loading user...
+    </div>
+
+  }
+
+
+  @if (!loading && user) {
+
+    <div class="card">
+
+      <div class="profile">
+
+        <div class="avatar">
+
+          {{ user.username.charAt(0).toUpperCase() }}
+
+        </div>
+
+        <div>
+
+          <h3>
+            {{ user.username }}
+          </h3>
+
+          <span class="role">
+            {{ user.role }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="details">
+
+        <div class="detail">
+
+          <label>
+            Username
+          </label>
+
+          <span>
+            {{ user.username }}
+          </span>
+
+        </div>
+
+
+        <div class="detail">
+
+          <label>
+            Email
+          </label>
+
+          <span>
+            {{ user.email }}
+          </span>
+
+        </div>
+
+
+        <div class="detail">
+
+          <label>
+            Phone
+          </label>
+
+          <span>
+            {{ user.phone || '-' }}
+          </span>
+
+        </div>
+
+
+        <div class="detail">
+
+          <label>
+            Role
+          </label>
+
+          <span>
+            {{ user.role }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <a
+          [routerLink]="[
+            '/users/edit',
+            user.userId
+          ]"
+          class="btn btn-primary">
+
+          Edit User
+
+        </a>
+
+        <a
+          routerLink="/users"
+          class="btn btn-secondary">
+
+          Back to List
+
+        </a>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
