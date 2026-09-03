@@ -1,1 +1,298 @@
-<p>register works!</p>
+<div class="register-page">
+
+  <!-- Left branding section -->
+  <section class="register-brand">
+
+    <div class="brand-content">
+
+      <div class="brand-logo">
+        <span class="logo-cross">+</span>
+      </div>
+
+      <h1>Hospital Management System</h1>
+
+      <p class="brand-description">
+        Manage patients, doctors, appointments, billing
+        and pharmacy from one secure platform.
+      </p>
+
+      <div class="features">
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Patient Management</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Doctor & Appointment Management</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Billing & Pharmacy</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Reports & Dashboard</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Right register section -->
+  <section class="register-section">
+
+    <div class="register-card">
+
+      <!-- Header -->
+      <div class="register-header">
+
+        <div class="mobile-logo">
+          <span>+</span>
+        </div>
+
+        <h2>Create Account</h2>
+
+        <p>
+          Sign up to get started with your hospital account
+        </p>
+
+      </div>
+
+
+      <!-- Error message -->
+      @if (errorMessage) {
+        <div class="error-message">
+          <span class="error-icon">!</span>
+          <span>{{ errorMessage }}</span>
+        </div>
+      }
+
+      <!-- Success message -->
+      @if (successMessage) {
+        <div class="success-message">
+          <span class="success-icon">✓</span>
+          <span>{{ successMessage }}</span>
+        </div>
+      }
+
+
+      <!-- Register Form -->
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="register-form"
+      >
+
+        <!-- Full Name -->
+        <div class="form-group">
+
+          <label for="fullName">Full Name</label>
+
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            />
+          </div>
+
+          @if (f['fullName'].touched && f['fullName'].errors) {
+            <div class="validation-message">
+              @if (f['fullName'].errors['required']) {
+                <span>Full name is required.</span>
+              }
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-group">
+
+          <label for="email">Email Address</label>
+
+          <div class="input-wrapper">
+            <span class="input-icon">✉</span>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+            />
+          </div>
+
+          @if (f['email'].touched && f['email'].errors) {
+            <div class="validation-message">
+              @if (f['email'].errors['required']) {
+                <span>Email is required.</span>
+              }
+              @if (f['email'].errors['email']) {
+                <span>Enter a valid email address.</span>
+              }
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Role -->
+        <div class="form-group">
+
+          <label for="role">Register As</label>
+
+          <div class="input-wrapper">
+            <span class="input-icon">🏷</span>
+            <select id="role" formControlName="role">
+              <option value="" disabled selected>
+                Select a role
+              </option>
+              @for (r of roles; track r.value) {
+                <option [value]="r.value">{{ r.label }}</option>
+              }
+            </select>
+          </div>
+
+         @if (f['role'].touched && f['role'].errors) {
+            <div class="validation-message">
+              @if (f['role'].errors['required']) {
+                <span>Please select a role.</span>
+              }
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Password -->
+        <div class="form-group">
+
+          <label for="password">Password</label>
+
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+            />
+          </div>
+
+          <span class="hint-text">
+            At least 6 characters, including a number
+          </span>
+
+          @if (f['password'].touched && f['password'].errors) {
+            <div class="validation-message">
+              @if (f['password'].errors['required']) {
+                <span>Password is required.</span>
+              }
+            @if (f['password'].errors['minlength']) {
+                <span>Password must be at least 6 characters.</span>
+              }
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+
+          <label for="confirmPassword">Confirm Password</label>
+
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              id="confirmPassword"
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+            />
+          </div>
+
+          @if (
+            registerForm.errors?.['passwordMismatch'] &&
+            f['confirmPassword'].touched
+          ) {
+            <div class="validation-message">
+              <span>Passwords do not match.</span>
+            </div>
+          }
+
+        </div>
+<div class="form-group">
+  <label for="phoneNumber">Phone Number</label>
+  <div class="input-wrapper">
+    <span class="input-icon">📞</span>
+    <input
+      id="phoneNumber"
+      type="tel"
+      formControlName="phoneNumber"
+      placeholder="Enter your phone number"
+      autocomplete="tel"
+    />
+  </div>
+</div>
+
+        <!-- Terms -->
+        <div class="terms-row">
+          <label class="remember-label">
+            <input type="checkbox" formControlName="acceptTerms" />
+            <span>
+              I agree to the <a href="javascript:void(0)">Terms of Service</a>
+              and <a href="javascript:void(0)">Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="register-button"
+        [disabled]="isSubmitting"
+        >
+         @if (!isSubmitting) {
+            <span>Create Account</span>
+          } @else {
+            <span class="spinner"></span>
+            <span>Creating account...</span>
+          }
+        </button>
+
+      </form>
+
+
+      <!-- Login link -->
+      <div class="login-link-section">
+        <span>Already have an account?</span>
+        <a routerLink="/login">Sign In</a>
+      </div>
+
+
+      <!-- Security -->
+      <div class="security-info">
+        <span class="security-icon">🔐</span>
+        <span>Your information is encrypted and secure</span>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>

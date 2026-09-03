@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+ 
 
 interface Report {
   id: number;
@@ -16,8 +16,7 @@ interface Report {
   selector: 'app-report-list',
   standalone:true,
   imports: [ CommonModule,
-  RouterLink,
-  FormsModule],
+    FormsModule],
   templateUrl: './report-list.html',
   styleUrl: './report-list.scss',
 })

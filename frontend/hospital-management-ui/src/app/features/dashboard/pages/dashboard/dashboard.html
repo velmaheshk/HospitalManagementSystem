@@ -504,7 +504,7 @@
 
 
             <a
-              routerLink="/patients"
+              [routerLink]="['/patient']"
               class="quick-action">
 
               <span>
@@ -516,20 +516,14 @@
                 <strong>
                   Add Patient
                 </strong>
-
                 <small>
                   Register a new patient
                 </small>
-
               </div>
-
             </a>
-
-
             <a
-              routerLink="/doctor/doctor-form"
+              [routerLink]="['/doctor/add']"
               class="quick-action">
-
               <span>
                 👨‍⚕️
               </span>
@@ -550,7 +544,7 @@
 
 
             <a
-              routerLink="/appointments"
+              [routerLink]="['/appointments']"
               class="quick-action">
 
               <span>
@@ -573,7 +567,7 @@
 
 
             <a
-              routerLink="/billing"
+              [routerLink]="['/billing']"
               class="quick-action">
 
               <span>

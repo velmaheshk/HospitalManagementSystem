@@ -1,86 +1,314 @@
-<div class="container-fluid p-4">
 
-  <div class="d-flex
-              justify-content-between
-              align-items-center
-              mb-4">
+<div class="container-fluid p-4 doctor-list-page">
+
+  <!-- ==============================
+       PAGE HEADER
+  =============================== -->
+
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
 
     <div>
+      <h2 class="page-title mb-1">Doctors</h2>
 
-      <h2>Doctors</h2>
-
-      <p class="text-muted">
-
-        Manage all hospital doctors
-
+      <p class="text-muted mb-0">
+        Manage hospital doctors, specializations and account status.
       </p>
-
     </div>
 
+    <div class="d-flex gap-2">
 
-    <a
-      routerLink="/doctor/add"
-      class="btn btn-primary">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="loadDoctors()"
+        [disabled]="loading">
 
-      + Add Doctor
+        ↻ Refresh
 
-    </a>
+      </button>
+
+      <a
+        routerLink="/doctor/add"
+        class="btn btn-primary">
+
+        + Add Doctor
+
+      </a>
+
+    </div>
 
   </div>
 
 
-  <div class="card shadow-sm">
+  <!-- ==============================
+       SUMMARY
+  =============================== -->
 
-    <div class="card-body">
+  <div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          👨‍⚕️
+        </div>
+
+        <div>
+          <span class="summary-label">
+            Total Doctors
+          </span>
+
+          <h3>
+            {{ doctors.length }}
+          </h3>
+        </div>
+
+      </div>
+
+    </div>
 
 
-      <div class="mb-3">
+    <div class="col-md-4">
 
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by name, specialization or email"
-          (input)="searchDoctors($event)">
+      <div class="summary-card">
+
+        <div class="summary-icon success">
+          ✓
+        </div>
+
+        <div>
+          <span class="summary-label">
+            Active Doctors
+          </span>
+
+          <h3>
+            {{ activeDoctorCount }}
+          </h3>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+      <div class="summary-card">
+
+        <div class="summary-icon secondary">
+          ⏸
+        </div>
+
+        <div>
+          <span class="summary-label">
+            Inactive Doctors
+          </span>
+
+          <h3>
+            {{ inactiveDoctorCount }}
+          </h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       MAIN CARD
+  =============================== -->
+
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-0">
+
+
+      <!-- ============================
+           SEARCH / FILTER
+      ============================= -->
+
+      <div class="filter-section p-3">
+
+        <div class="row g-2 align-items-center">
+
+          <div class="col-lg-7">
+
+            <div class="search-wrapper">
+
+              <span class="search-icon">
+                🔍
+              </span>
+
+              <input
+                type="text"
+                class="form-control search-input"
+                placeholder="Search by name, specialization, email or phone..."
+                [value]="searchText"
+                (input)="searchDoctors($event)" />
+
+            </div>
+
+          </div>
+
+
+          <div class="col-lg-3">
+
+            <select
+              class="form-select"
+              [value]="statusFilter"
+              (change)="filterByStatus($event)">
+
+              <option value="all">
+                All Doctors
+              </option>
+
+              <option value="active">
+                Active
+              </option>
+
+              <option value="inactive">
+                Inactive
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="col-lg-2">
+
+            <button
+              type="button"
+              class="btn btn-light border w-100"
+              (click)="clearFilters()">
+
+              Clear
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        @if (searchText || statusFilter !== 'all') {
+
+          <div class="filter-info mt-2">
+
+            Showing
+            <strong>{{ filteredDoctors.length }}</strong>
+            of
+            <strong>{{ doctors.length }}</strong>
+            doctors
+
+          </div>
+
+        }
 
       </div>
 
 
+      <!-- ==============================
+           LOADING
+      =============================== -->
+
       @if (loading) {
 
-        <div class="text-center p-4">
+        <div class="loading-container">
 
-          Loading doctors...
+          <div
+            class="spinner-border text-primary"
+            role="status">
+
+          </div>
+
+          <p class="text-muted mt-3 mb-0">
+            Loading doctors...
+          </p>
 
         </div>
 
       }
 
 
-      @if (!loading) {
+      <!-- ==============================
+           ERROR
+      =============================== -->
+
+      @if (!loading && errorMessage) {
+
+        <div class="alert alert-danger m-3">
+
+          <strong>
+            Unable to load doctors.
+          </strong>
+
+          <div class="small mt-1">
+            {{ errorMessage }}
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-danger mt-2"
+            (click)="loadDoctors()">
+
+            Try Again
+
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- ==============================
+           TABLE
+      =============================== -->
+
+      @if (!loading && !errorMessage) {
 
         <div class="table-responsive">
 
-          <table class="table table-hover">
+          <table class="table table-hover align-middle mb-0">
 
-            <thead>
+            <thead class="table-light">
 
               <tr>
 
-                <th>#</th>
+                <th class="text-center">
+                  #
+                </th>
 
-                <th>Doctor</th>
+                <th>
+                  Doctor
+                </th>
 
-                <th>Email</th>
+                <th>
+                  Email
+                </th>
 
-                <th>Phone</th>
+                <th>
+                  Phone
+                </th>
 
-                <th>Specialization</th>
+                <th>
+                  Specialization
+                </th>
 
-                <th>Experience</th>
+                <th class="text-center">
+                  Experience
+                </th>
 
-                <th>Status</th>
+                <th class="text-center">
+                  Status
+                </th>
 
-                <th>Actions</th>
+                <th class="text-center">
+                  Actions
+                </th>
 
               </tr>
 
@@ -96,55 +324,137 @@
 
                 <tr>
 
-                  <td>
-                    {{ doctor.id }}
-                  </td>
 
+                  <!-- ID -->
 
-                  <td>
+                  <td class="text-center">
 
-                    Dr.
-                    {{ doctor.firstName }}
-                    {{ doctor.lastName }}
+                    <span class="doctor-id">
+                      {{ doctor.id }}
+                    </span>
 
                   </td>
 
 
+                  <!-- DOCTOR -->
+
                   <td>
-                    {{ doctor.email }}
+
+                    <div class="doctor-cell">
+
+                      <div class="doctor-avatar">
+
+                        {{
+                          getDoctorInitials(
+                            doctor.firstName,
+                            doctor.lastName
+                          )
+                        }}
+
+                      </div>
+
+                      <div>
+
+                        <div class="doctor-name">
+
+                          Dr.
+                          {{ doctor.firstName }}
+                          {{ doctor.lastName }}
+
+                        </div>
+
+                        <small class="text-muted">
+                          Doctor ID: {{ doctor.id }}
+                        </small>
+
+                      </div>
+
+                    </div>
+
                   </td>
 
 
-                  <td>
-                    {{ doctor.phoneNumber }}
-                  </td>
-
-
-                  <td>
-                    {{ doctor.specialization }}
-                  </td>
-
+                  <!-- EMAIL -->
 
                   <td>
 
-                    {{ doctor.experienceYears }}
-                    Years
+                    @if (doctor.email) {
 
-                  </td>
+                      <span>
+                        {{ doctor.email }}
+                      </span>
 
+                    } @else {
 
-                  <td>
-
-                    @if (doctor.isActive) {
-
-                      <span class="badge text-bg-success">
-                        Active
+                      <span class="text-muted">
+                        Not available
                       </span>
 
                     }
-                    @else {
 
-                      <span class="badge text-bg-secondary">
+                  </td>
+
+
+                  <!-- PHONE -->
+
+                  <td>
+
+                    @if (doctor.phoneNumber) {
+
+                      {{ doctor.phoneNumber }}
+
+                    } @else {
+
+                      <span class="text-muted">
+                        Not available
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <!-- SPECIALIZATION -->
+
+                  <td>
+
+                    <span class="specialization-badge">
+
+                      {{ doctor.specialization || 'General' }}
+
+                    </span>
+
+                  </td>
+
+
+                  <!-- EXPERIENCE -->
+
+                  <td class="text-center">
+
+                    <strong>
+                      {{ doctor.experienceYears ?? 0 }}
+                    </strong>
+
+                    <span class="text-muted">
+                      Years
+                    </span>
+
+                  </td>
+
+
+                  <!-- STATUS -->
+
+                  <td class="text-center">
+
+                    @if (doctor.isActive) {
+
+                      <span class="badge rounded-pill text-bg-success">
+                        Active
+                      </span>
+
+                    } @else {
+
+                      <span class="badge rounded-pill text-bg-secondary">
                         Inactive
                       </span>
 
@@ -153,25 +463,73 @@
                   </td>
 
 
-                  <td>
+                  <!-- ACTIONS -->
 
-                   <a
-  [routerLink]="doctor.id != null ? ['/doctor/edit', doctor.id] : null">
-  Edit
-</a>
+                  <td class="text-center">
+
+                    <div class="action-buttons">
+
+                      <!-- View -->
+
+                      @if (doctor.id != null) {
+
+                        <a
+                          class="btn btn-sm btn-outline-info"
+                          [routerLink]="['/doctor/view', doctor.id]"
+                          title="View Doctor">
+
+                          View
+
+                        </a>
+
+                      }
 
 
-                    <!-- <button
-                      class="btn btn-sm btn-outline-danger"
-                      (click)="deleteDoctor(doctor)">
+                      <!-- Edit -->
 
-                      Delete
+                      @if (doctor.id != null) {
 
-                    </button> -->
-<a
-  [routerLink]="doctor.id != null ? ['/doctor/delete', doctor.id] : null">
-  Delete
-</a>
+                        <a
+                          class="btn btn-sm btn-outline-primary"
+                          [routerLink]="['/doctor/edit', doctor.id]"
+                          title="Edit Doctor">
+
+                          Edit
+
+                        </a>
+
+                      }
+
+
+                      <!-- Delete -->
+
+                      @if (doctor.id != null) {
+
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger"
+                          title="Delete Doctor"
+                          [disabled]="deletingDoctorId === doctor.id"
+                          (click)="deleteDoctor(doctor)">
+
+                          @if (deletingDoctorId === doctor.id) {
+
+                            <span
+                              class="spinner-border spinner-border-sm">
+                            </span>
+
+                          } @else {
+
+                            Delete
+
+                          }
+
+                        </button>
+
+                      }
+
+                    </div>
+
                   </td>
 
                 </tr>
@@ -179,15 +537,39 @@
               }
 
 
+              <!-- EMPTY -->
+
               @if (filteredDoctors.length === 0) {
 
                 <tr>
 
                   <td
                     colspan="8"
-                    class="text-center p-4">
+                    class="empty-state">
 
-                    No doctors found
+                    <div class="empty-icon">
+                      👨‍⚕️
+                    </div>
+
+                    <h5>
+                      No doctors found
+                    </h5>
+
+                    <p class="text-muted">
+
+                      No doctors match your current
+                      search or filter.
+
+                    </p>
+
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm"
+                      (click)="clearFilters()">
+
+                      Clear Filters
+
+                    </button>
 
                   </td>
 

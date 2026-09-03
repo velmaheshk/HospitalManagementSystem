@@ -92,4 +92,20 @@ export class AuthService {
       ? JSON.parse(user)
       : null;
   }
+
+ 
+
+forgotPassword(email: string) {
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/auth/forgot-password`,
+    { email }
+  );
+}
+
+resetPassword(payload: { token: string; newPassword: string }) {
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/auth/reset-password`,
+    payload
+  );
+}
 }

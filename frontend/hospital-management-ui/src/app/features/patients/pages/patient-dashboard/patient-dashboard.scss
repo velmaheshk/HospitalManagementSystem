@@ -1,76 +1,985 @@
-.dashboard {
-  min-height: 100vh;
-  padding: 30px;
+/* =========================================
+   PATIENT DASHBOARD
+========================================= */
+
+.patient-dashboard {
+  padding: 28px;
   background: #f5f7fb;
+  min-height: calc(100vh - 64px);
+  color: #1f2937;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .dashboard-header {
-  margin-bottom: 30px;
-}
-
-.dashboard-header h1 {
-  margin: 0 0 8px;
-  font-size: 30px;
-  color: #111827;
-}
-
-.dashboard-header p {
-  margin: 0;
-  color: #6b7280;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.card {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
-
-  padding: 25px;
-
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 15px;
-
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 28px;
 }
 
-.icon {
-  width: 55px;
-  height: 55px;
+.welcome-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
+.patient-avatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 12px;
-
-  background: #ecfdf5;
-
-  font-size: 25px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.card h3 {
-  margin: 0 0 6px;
+.welcome-label {
+  margin: 0 0 4px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
   color: #111827;
 }
 
-.card p {
-  margin: 0;
-  color: #6b7280;
+.patient-id {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
 }
 
-@media (max-width: 768px) {
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  .dashboard {
-    padding: 20px;
+.notification-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  font-size: 18px;
+}
+
+.notification-count {
+  position: absolute;
+  right: -4px;
+  top: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-button {
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: white;
+  color: #334155;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+.section {
+  margin-bottom: 26px;
+}
+
+.section-header {
+  margin-bottom: 14px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.section-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   QUICK ACTIONS
+========================================= */
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.quick-action-card {
+  background: white;
+  border: 1px solid #e7ebf0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.quick-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+.quick-action-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.quick-action-card.blue .quick-action-icon {
+  background: #eaf2ff;
+}
+
+.quick-action-card.green .quick-action-icon {
+  background: #e9f9f0;
+}
+
+.quick-action-card.purple .quick-action-icon {
+  background: #f1edff;
+}
+
+.quick-action-card.orange .quick-action-icon {
+  background: #fff4df;
+}
+
+.quick-action-card.red .quick-action-icon {
+  background: #fff0f0;
+}
+
+.quick-action-card.teal .quick-action-icon {
+  background: #e7f9f8;
+}
+
+.quick-action-content {
+  min-width: 0;
+}
+
+.quick-action-content h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.quick-action-content p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.action-arrow {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 20px;
+}
+
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 26px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #e7ebf0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.stat-icon.blue {
+  background: #eaf2ff;
+}
+
+.stat-icon.green {
+  background: #eaf9ef;
+}
+
+.stat-icon.orange {
+  background: #fff4df;
+}
+
+.stat-icon.red {
+  background: #fff0f0;
+}
+
+.stat-label {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.stat-card strong {
+  font-size: 24px;
+  color: #111827;
+}
+
+
+/* =========================================
+   COLUMNS
+========================================= */
+
+.dashboard-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  gap: 22px;
+}
+
+.main-column,
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.dashboard-card {
+  background: white;
+  border: 1px solid #e7ebf0;
+  border-radius: 17px;
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px 22px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 17px;
+  color: #111827;
+}
+
+.card-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.view-all-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   APPOINTMENTS
+========================================= */
+
+.appointment-list {
+  padding: 0 22px;
+}
+
+.appointment-item {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.appointment-item:last-child {
+  border-bottom: none;
+}
+
+.appointment-date,
+.doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.date-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appointment-date strong,
+.doctor-info strong {
+  display: block;
+  font-size: 13px;
+}
+
+.appointment-date span,
+.doctor-info span {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.doctor-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.appointment-type > span {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.appointment-type small {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.status-confirmed {
+  color: #16a34a;
+}
+
+.status-completed {
+  color: #2563eb;
+}
+
+.status-cancelled {
+  color: #dc2626;
+}
+
+.status-pending {
+  color: #d97706;
+}
+
+.appointment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.small-button {
+  border: 1px solid #dbe2ea;
+  background: white;
+  color: #475569;
+  border-radius: 7px;
+  padding: 6px 9px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.small-button.danger {
+  color: #dc2626;
+}
+
+
+/* =========================================
+   RECORDS
+========================================= */
+
+.records-list {
+  padding: 0 22px;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-icon {
+  width: 42px;
+  height: 42px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.record-details {
+  flex: 1;
+}
+
+.record-details strong {
+  display: block;
+  font-size: 13px;
+}
+
+.record-details span,
+.record-details small {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.record-type {
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 10px;
+}
+
+.download-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   PRESCRIPTIONS
+========================================= */
+
+.prescription-list {
+  padding: 0 22px;
+}
+
+.prescription-item {
+  display: grid;
+  grid-template-columns: auto 1.3fr 1fr 1fr;
+  gap: 15px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.prescription-item:last-child {
+  border-bottom: none;
+}
+
+.medicine-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #fff7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medicine-details strong {
+  display: block;
+  font-size: 13px;
+}
+
+.medicine-details span,
+.medicine-schedule span,
+.medicine-schedule small {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.prescribed-by small {
+  display: block;
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.prescribed-by span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+
+/* =========================================
+   HEALTH SUMMARY
+========================================= */
+
+.health-card {
+  padding-bottom: 20px;
+}
+
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 20px 22px;
+  gap: 1px;
+  background: #edf0f4;
+}
+
+.health-item {
+  background: white;
+  padding: 13px;
+}
+
+.health-item span,
+.health-item small {
+  display: block;
+  color: #64748b;
+  font-size: 10px;
+}
+
+.health-item strong {
+  display: block;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.blood-group {
+  color: #dc2626;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.primary-button {
+  border: none;
+  border-radius: 9px;
+  padding: 11px 16px;
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.outline-button {
+  border: 1px solid #dbe2ea;
+  border-radius: 9px;
+  padding: 10px 14px;
+  background: white;
+  color: #334155;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.full-width {
+  width: calc(100% - 44px);
+  margin: 0 22px;
+}
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+.notification-list {
+  padding: 0 22px;
+}
+
+.notification-item {
+  position: relative;
+  display: flex;
+  gap: 11px;
+  padding: 15px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item.unread {
+  background: #fafcff;
+}
+
+.notification-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-appointment {
+  background: #eaf2ff;
+}
+
+.notification-report {
+  background: #eaf9ef;
+}
+
+.notification-billing {
+  background: #fff4df;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content strong {
+  display: block;
+  font-size: 12px;
+}
+
+.notification-content p {
+  margin: 4px 0;
+  color: #64748b;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.notification-content small {
+  color: #94a3b8;
+  font-size: 9px;
+}
+
+.unread-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  margin-top: 6px;
+}
+
+
+/* =========================================
+   BILLING
+========================================= */
+
+.billing-card {
+  padding-bottom: 20px;
+}
+
+.billing-amount {
+  padding: 20px 22px 12px;
+}
+
+.billing-amount span {
+  display: block;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.billing-amount strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 28px;
+  color: #dc2626;
+}
+
+.billing-info {
+  padding: 0 22px 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.billing-info span {
+  display: block;
+  color: #94a3b8;
+  font-size: 9px;
+}
+
+.billing-info strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+
+/* =========================================
+   EMERGENCY
+========================================= */
+
+.emergency-card {
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-color: #fecaca;
+  background: #fffafa;
+}
+
+.emergency-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #fee2e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emergency-card h3 {
+  margin: 0 0 5px;
+  font-size: 13px;
+}
+
+.emergency-card strong {
+  display: block;
+  font-size: 11px;
+}
+
+.emergency-card p {
+  margin: 3px 0 0;
+  color: #64748b;
+  font-size: 10px;
+}
+
+.call-button {
+  margin-left: auto;
+  background: #dc2626;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state > div {
+  font-size: 35px;
+}
+
+.empty-state h3 {
+  margin: 12px 0 5px;
+  font-size: 15px;
+}
+
+.empty-state p {
+  margin: 0 0 15px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .cards {
+  .statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-columns {
     grid-template-columns: 1fr;
   }
+
+}
+
+
+@media (max-width: 900px) {
+
+  .appointment-item {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .appointment-actions {
+    flex-direction: row;
+  }
+
+  .prescription-item {
+    grid-template-columns: auto 1fr;
+  }
+
+  .medicine-schedule,
+  .prescribed-by {
+    padding-left: 57px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .patient-dashboard {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+  }
+
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+
+  .patient-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 19px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .profile-button {
+    padding: 0 10px;
+    font-size: 11px;
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .statistics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .appointment-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .appointment-actions {
+    width: 100%;
+  }
+
+  .appointment-actions button {
+    flex: 1;
+  }
+
+  .record-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .record-details {
+    min-width: calc(100% - 60px);
+  }
+
+  .record-type {
+    margin-left: 56px;
+  }
+
+  .download-button {
+    margin-left: auto;
+  }
+
+  .dashboard-header {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+@media (max-width: 420px) {
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .notification-button,
+  .profile-button {
+    flex: 1;
+  }
+
+  .health-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-info {
+    flex-direction: column;
+  }
+
 }
