@@ -21,6 +21,9 @@ builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
