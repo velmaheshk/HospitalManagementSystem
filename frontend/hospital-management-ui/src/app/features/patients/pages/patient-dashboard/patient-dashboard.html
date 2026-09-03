@@ -1,45 +1,765 @@
-<div class="dashboard">
+<div class="patient-dashboard">
 
-  <div class="dashboard-header">
-    <div>
-      <h1>Patient Dashboard</h1>
-      <p>Welcome to Hospital Management System</p>
-    </div>
-  </div>
+  <!-- ========================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================= -->
 
-  <div class="cards">
+  <section class="dashboard-header">
 
-    <div class="card">
-      <div class="icon">📅</div>
-      <div>
-        <h3>Appointments</h3>
-        <p>View and manage your appointments</p>
+    <div class="welcome-section">
+
+      <div class="patient-avatar">
+        {{ patientName.charAt(0) }}
       </div>
+
+      <div>
+        <p class="welcome-label">Welcome back</p>
+
+        <h1>
+          {{ patientName }}
+        </h1>
+
+        <p class="patient-id">
+          Patient ID: {{ patientId }}
+        </p>
+      </div>
+
     </div>
 
-    <div class="card">
-      <div class="icon">👨‍⚕️</div>
-      <div>
-        <h3>Doctors</h3>
-        <p>Find available doctors</p>
-      </div>
+    <div class="header-actions">
+
+      <button
+        class="notification-button"
+        type="button"
+        (click)="viewNotifications()">
+
+        🔔
+
+        <span
+          class="notification-count"
+          *ngIf="getUnreadNotificationCount() > 0">
+
+          {{ getUnreadNotificationCount() }}
+
+        </span>
+
+      </button>
+
+      <button
+        class="profile-button"
+        type="button"
+        (click)="viewProfile()">
+
+        My Profile
+
+      </button>
+
     </div>
 
-    <div class="card">
-      <div class="icon">💊</div>
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- QUICK ACTIONS -->
+  <!-- ========================= -->
+
+  <section class="section">
+
+    <div class="section-header">
+
       <div>
-        <h3>Prescriptions</h3>
-        <p>View your prescriptions</p>
+        <h2>Quick Actions</h2>
+        <p>Access your frequently used services</p>
       </div>
+
     </div>
 
-    <div class="card">
-      <div class="icon">💳</div>
-      <div>
-        <h3>Billing</h3>
-        <p>View your bills and payments</p>
-      </div>
+    <div class="quick-actions-grid">
+
+      <a
+        *ngFor="let action of quickActions"
+        [routerLink]="action.route"
+        class="quick-action-card"
+        [ngClass]="action.cssClass">
+
+        <div class="quick-action-icon">
+          {{ action.icon }}
+        </div>
+
+        <div class="quick-action-content">
+
+          <h3>
+            {{ action.title }}
+          </h3>
+
+          <p>
+            {{ action.description }}
+          </p>
+
+        </div>
+
+        <span class="action-arrow">
+          →
+        </span>
+
+      </a>
+
     </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- STATISTICS -->
+  <!-- ========================= -->
+
+  <section class="statistics-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        📅
+      </div>
+
+      <div>
+        <span class="stat-label">
+          Upcoming Appointments
+        </span>
+
+        <strong>
+          {{ dashboardStats.upcomingAppointments }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        ✓
+      </div>
+
+      <div>
+        <span class="stat-label">
+          Completed Visits
+        </span>
+
+        <strong>
+          {{ dashboardStats.completedAppointments }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        💊
+      </div>
+
+      <div>
+        <span class="stat-label">
+          Active Prescriptions
+        </span>
+
+        <strong>
+          {{ dashboardStats.activePrescriptions }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon red">
+        ₹
+      </div>
+
+      <div>
+        <span class="stat-label">
+          Pending Bills
+        </span>
+
+        <strong>
+          {{ dashboardStats.pendingBills }}
+        </strong>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- MAIN CONTENT -->
+  <!-- ========================= -->
+
+  <div class="dashboard-columns">
+
+    <!-- LEFT COLUMN -->
+
+    <div class="main-column">
+
+
+      <!-- UPCOMING APPOINTMENTS -->
+
+      <section class="dashboard-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Upcoming Appointments</h2>
+            <p>Your scheduled appointments</p>
+          </div>
+
+          <button
+            class="view-all-button"
+            type="button"
+            (click)="viewAllAppointments()">
+
+            View All →
+
+          </button>
+
+        </div>
+
+
+        <div
+          class="appointment-list"
+          *ngIf="upcomingAppointments.length > 0">
+
+          <div
+            class="appointment-item"
+            *ngFor="let appointment of upcomingAppointments">
+
+            <div class="appointment-date">
+
+              <span class="date-icon">
+                📅
+              </span>
+
+              <div>
+                <strong>
+                  {{ appointment.date }}
+                </strong>
+
+                <span>
+                  {{ appointment.time }}
+                </span>
+              </div>
+
+            </div>
+
+
+            <div class="doctor-info">
+
+              <div class="doctor-avatar">
+                DR
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ appointment.doctorName }}
+                </strong>
+
+                <span>
+                  {{ appointment.specialization }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="appointment-type">
+
+              <span>
+                {{ appointment.appointmentType }}
+              </span>
+
+              <small
+                [ngClass]="getStatusClass(appointment.status)">
+
+                {{ appointment.status }}
+
+              </small>
+
+            </div>
+
+
+            <div class="appointment-actions">
+
+              <button
+                type="button"
+                class="small-button"
+                (click)="rescheduleAppointment(appointment)">
+
+                Reschedule
+
+              </button>
+
+              <button
+                type="button"
+                class="small-button danger"
+                (click)="cancelAppointment(appointment)">
+
+                Cancel
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="empty-state"
+          *ngIf="upcomingAppointments.length === 0">
+
+          <div>📅</div>
+
+          <h3>No upcoming appointments</h3>
+
+          <p>
+            You don't have any upcoming appointments.
+          </p>
+
+          <button
+            type="button"
+            class="primary-button"
+            (click)="bookAppointment()">
+
+            Book Appointment
+
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================= -->
+      <!-- MEDICAL RECORDS -->
+      <!-- ========================= -->
+
+      <section class="dashboard-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Recent Medical Records</h2>
+            <p>Your latest medical information</p>
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="viewAllRecords()">
+
+            View All →
+
+          </button>
+
+        </div>
+
+
+        <div class="records-list">
+
+          <div
+            class="record-item"
+            *ngFor="let record of medicalRecords">
+
+            <div class="record-icon">
+              📄
+            </div>
+
+            <div class="record-details">
+
+              <strong>
+                {{ record.title }}
+              </strong>
+
+              <span>
+                {{ record.doctorName }}
+              </span>
+
+              <small>
+                {{ record.date }}
+              </small>
+
+            </div>
+
+            <span class="record-type">
+              {{ record.type }}
+            </span>
+
+            <button
+              type="button"
+              class="download-button"
+              (click)="downloadReport(record)">
+
+              Download
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================= -->
+      <!-- PRESCRIPTIONS -->
+      <!-- ========================= -->
+
+      <section class="dashboard-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Current Prescriptions</h2>
+            <p>Medicines currently prescribed to you</p>
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="viewAllPrescriptions()">
+
+            View All →
+
+          </button>
+
+        </div>
+
+
+        <div class="prescription-list">
+
+          <div
+            class="prescription-item"
+            *ngFor="let prescription of prescriptions">
+
+            <div class="medicine-icon">
+              💊
+            </div>
+
+            <div class="medicine-details">
+
+              <strong>
+                {{ prescription.medicineName }}
+              </strong>
+
+              <span>
+                {{ prescription.dosage }}
+              </span>
+
+            </div>
+
+            <div class="medicine-schedule">
+
+              <span>
+                {{ prescription.frequency }}
+              </span>
+
+              <small>
+                {{ prescription.duration }}
+              </small>
+
+            </div>
+
+            <div class="prescribed-by">
+
+              <small>
+                Prescribed by
+              </small>
+
+              <span>
+                {{ prescription.doctorName }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- RIGHT COLUMN -->
+    <!-- ========================= -->
+
+    <aside class="side-column">
+
+
+      <!-- HEALTH SUMMARY -->
+
+      <section class="dashboard-card health-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Health Summary</h2>
+            <p>Basic health information</p>
+          </div>
+
+        </div>
+
+
+        <div class="health-grid">
+
+          <div class="health-item">
+
+            <span>
+              Age
+            </span>
+
+            <strong>
+              {{ patientInfo.age }}
+            </strong>
+
+            <small>
+              Years
+            </small>
+
+          </div>
+
+
+          <div class="health-item">
+
+            <span>
+              Gender
+            </span>
+
+            <strong>
+              {{ patientInfo.gender }}
+            </strong>
+
+          </div>
+
+
+          <div class="health-item">
+
+            <span>
+              Blood Group
+            </span>
+
+            <strong class="blood-group">
+              {{ patientInfo.bloodGroup }}
+            </strong>
+
+          </div>
+
+
+          <div class="health-item">
+
+            <span>
+              Patient ID
+            </span>
+
+            <strong>
+              {{ patientId }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="outline-button full-width"
+          (click)="viewProfile()">
+
+          View Complete Profile
+
+        </button>
+
+      </section>
+
+
+      <!-- ========================= -->
+      <!-- NOTIFICATIONS -->
+      <!-- ========================= -->
+
+      <section class="dashboard-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Notifications</h2>
+          </div>
+
+          <button
+            type="button"
+            class="view-all-button"
+            (click)="viewNotifications()">
+
+            View All
+
+          </button>
+
+        </div>
+
+
+        <div class="notification-list">
+
+          <div
+            class="notification-item"
+            *ngFor="let notification of notifications"
+            [ngClass]="{
+              'unread': notification.unread
+            }">
+
+            <div
+              class="notification-icon"
+              [ngClass]="getNotificationClass(notification.type)">
+
+              <span *ngIf="notification.type === 'appointment'">
+                📅
+              </span>
+
+              <span *ngIf="notification.type === 'report'">
+                🧪
+              </span>
+
+              <span *ngIf="notification.type === 'billing'">
+                ₹
+              </span>
+
+            </div>
+
+            <div class="notification-content">
+
+              <strong>
+                {{ notification.title }}
+              </strong>
+
+              <p>
+                {{ notification.message }}
+              </p>
+
+              <small>
+                {{ notification.time }}
+              </small>
+
+            </div>
+
+            <span
+              class="unread-dot"
+              *ngIf="notification.unread">
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ========================= -->
+      <!-- BILLING SUMMARY -->
+      <!-- ========================= -->
+
+      <section class="dashboard-card billing-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Billing Summary</h2>
+            <p>Outstanding payment</p>
+          </div>
+
+        </div>
+
+
+        <div class="billing-amount">
+
+          <span>
+            Outstanding Amount
+          </span>
+
+          <strong>
+            ₹2,450
+          </strong>
+
+        </div>
+
+
+        <div class="billing-info">
+
+          <div>
+            <span>Bill No.</span>
+            <strong>INV-2026-00451</strong>
+          </div>
+
+          <div>
+            <span>Due Date</span>
+            <strong>10 Sep 2026</strong>
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-button full-width"
+          (click)="viewBilling()">
+
+          View & Pay Bill
+
+        </button>
+
+      </section>
+
+
+      <!-- ========================= -->
+      <!-- EMERGENCY CONTACT -->
+      <!-- ========================= -->
+
+      <section class="dashboard-card emergency-card">
+
+        <div class="emergency-icon">
+          🚨
+        </div>
+
+        <div>
+
+          <h3>
+            Emergency Contact
+          </h3>
+
+          <strong>
+            {{ patientInfo.emergencyContact }}
+          </strong>
+
+          <p>
+            {{ patientInfo.emergencyPhone }}
+          </p>
+
+        </div>
+
+        <a
+          class="call-button"
+          [href]="'tel:' + patientInfo.emergencyPhone">
+
+          Call
+
+        </a>
+
+      </section>
+
+    </aside>
 
   </div>
 
