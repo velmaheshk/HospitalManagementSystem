@@ -99,6 +99,23 @@ export const routes: Routes = [
   },
 
   // =====================================================
+  // Billing MODULE
+  // =====================================================
+  {
+    path: 'billing',
+      loadComponent: () =>
+      import('./features/billing/bill/bill').then(
+        m => m.Bill
+      )
+  },
+{
+    path: 'billitem',
+      loadComponent: () =>
+      import('./features/billing/billitem/billitem').then(
+        m => m.Billitem
+      )
+  },
+  // =====================================================
   // PATIENT MODULE
   // =====================================================
   {

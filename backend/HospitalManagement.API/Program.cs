@@ -1,17 +1,18 @@
+using HospitalManagement.API.Middleware;
+using HospitalManagement.Application.Interfaces;
 using HospitalManagement.Application.Mappings;
 using HospitalManagement.Application.Services;
+using HospitalManagement.Domain.Interface;
+using HospitalManagement.Domain.Interface.IRepository;
 using HospitalManagement.Domain.IRepository;
 using HospitalManagement.Infrastructure.Data;
 using HospitalManagement.Infrastructure.Repositories;
+using HospitalManagement.Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using HospitalManagement.API.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using HospitalManagement.Application.Interfaces;
-using HospitalManagement.Infrastructure.Security;
 using Microsoft.OpenApi;
-using HospitalManagement.Domain.Interface.IRepository;
+using System.Text;
 //using HospitalManagement.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,9 @@ builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
@@ -45,6 +49,13 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddScoped<IBillRepository, BillRepo>();
+
+builder.Services.AddScoped<BillService, BillService>();
+builder.Services.AddScoped<IBillRepository, BillService>();
+builder.Services.AddControllers();
 
 
 
