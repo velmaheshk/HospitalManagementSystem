@@ -1,22 +1,34 @@
-<section class="doctor-dashboard-container">
-  <header class="dashboard-header">
+<div class="container-fluid p-4">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <p class="eyebrow">Doctor Management</p>
+      <!-- <p class="eyebrow">Doctor </p> -->
       <h1>Doctor Management</h1>
-      <p class="subtitle">Manage doctors, specializations and availability</p>
+      <p class="subtitle">
+        Manage doctors, specializations and availability
+      </p>
     </div>
-  </header>
+  </div>
 
+  <!-- Loading -->
   @if (loading) {
-    <div class="loading-state">Loading dashboard...</div>
+    <div class="loading-state">
+      Loading dashboard...
+    </div>
   }
 
+  <!-- Error -->
   @if (errorMessage) {
-    <div class="alert-box">{{ errorMessage }}</div>
+    <div class="alert-box">
+      {{ errorMessage }}
+    </div>
   }
 
+  <!-- Summary Cards -->
   @if (dashboard) {
     <div class="summary-grid">
+
       <article class="summary-card">
         <div class="summary-icon">👩‍⚕️</div>
         <div>
@@ -48,24 +60,40 @@
           <strong>{{ dashboard.totalSpecializations }}</strong>
         </div>
       </article>
+
     </div>
   }
 
+  <!-- Quick Actions -->
   <div class="quick-actions-panel">
-    <h2>Quick actions</h2>
+    <h2>Quick Actions</h2>
+
     <div class="quick-actions">
-      <a routerLink="/doctor/list" class="action-button secondary">View Doctors</a>
-      <a routerLink="/doctor/add" class="action-button primary">Add Doctor</a>
+      <a
+        routerLink="/doctor/list"
+        class="action-button secondary">
+        View Doctors
+      </a>
+
+      <a
+        routerLink="/doctor/add"
+        class="action-button primary">
+        Add Doctor
+      </a>
     </div>
   </div>
 
+  <!-- Recent Doctors -->
   <div class="recent-doctors-panel">
+
     <div class="panel-header">
-      <h2>Recent doctors</h2>
+      <h2>Recent Doctors</h2>
     </div>
 
-    @if (recentDoctors.length) {
+    @if (recentDoctors.length > 0) {
+
       <div class="table-wrapper">
+
         <table>
           <thead>
             <tr>
@@ -77,29 +105,70 @@
               <th>Actions</th>
             </tr>
           </thead>
+
           <tbody>
+
             @for (doctor of recentDoctors; track doctor.id) {
+
               <tr>
-                <td>{{ doctor.fullName }}</td>
-                <td>{{ doctor.specialization }}</td>
-                <td>{{ doctor.department }}</td>
-                <td>{{ doctor.phone }}</td>
+
                 <td>
-                  <span class="status-badge" [class.active]="doctor.status === 'Active'">
+                  {{ doctor.fullName }}
+                </td>
+
+                <td>
+                  {{ doctor.specialization }}
+                </td>
+
+                <td>
+                  {{ doctor.department }}
+                </td>
+
+                <td>
+                  {{ doctor.phone }}
+                </td>
+
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.active]="doctor.status === 'Active'">
                     {{ doctor.status }}
                   </span>
                 </td>
+
                 <td class="row-actions">
-                  <a [routerLink]="['/doctor/list']" class="text-link">View</a>
-                  <a [routerLink]="['/doctor/edit', doctor.id]" class="text-link">Edit</a>
+
+                  <a
+                    [routerLink]="['/doctor/list']"
+                    class="text-link">
+                    View
+                  </a>
+
+                  <a
+                    [routerLink]="['/doctor/edit', doctor.id]"
+                    class="text-link">
+                    Edit
+                  </a>
+
                 </td>
+
               </tr>
+
             }
+
           </tbody>
         </table>
+
       </div>
+
     } @else {
-      <div class="empty-state">No recent doctors available.</div>
+
+      <div class="empty-state">
+        No recent doctors available.
+      </div>
+
     }
+
   </div>
-</section>
+
+</div>

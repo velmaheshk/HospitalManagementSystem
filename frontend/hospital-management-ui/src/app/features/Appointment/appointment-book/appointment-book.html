@@ -1,0 +1,240 @@
+<div class="appointment-page">
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>Book Appointment</h2>
+
+      <p>
+        Create a new patient appointment
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="form-card">
+
+    <form
+      [formGroup]="appointmentForm"
+      (ngSubmit)="submit()">
+
+
+      <!-- Patient ID -->
+
+      <div class="form-group">
+
+        <label>
+          Patient ID *
+        </label>
+
+        <input
+          type="number"
+          formControlName="patientId"
+          placeholder="Enter patient ID">
+
+
+        <span
+          class="validation"
+          *ngIf="
+            appointmentForm.get('patientId')?.touched &&
+            appointmentForm.get('patientId')?.invalid
+          ">
+
+          Patient ID is required.
+
+        </span>
+
+      </div>
+
+
+      <!-- Doctor Dropdown -->
+
+      <div class="form-group">
+
+        <label>
+          Doctor *
+        </label>
+
+        <select formControlName="doctorId">
+
+          <option value="">
+            {{ loadingDoctors ? 'Loading doctors...' : 'Select Doctor' }}
+          </option>
+
+          <option
+            *ngFor="let doctor of doctors"
+            [value]="doctor.doctorId">
+
+            Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+            <ng-container *ngIf="doctor.specialization">
+              — {{ doctor.specialization }}
+            </ng-container>
+
+          </option>
+
+        </select>
+
+
+        <span
+          class="validation"
+          *ngIf="
+            appointmentForm.get('doctorId')?.touched &&
+            appointmentForm.get('doctorId')?.invalid
+          ">
+
+          Please select a doctor.
+
+        </span>
+
+      </div>
+
+
+      <!-- Date -->
+
+      <div class="form-group">
+
+        <label>
+          Appointment Date *
+        </label>
+
+        <input
+          type="date"
+          formControlName="appointmentDate">
+
+
+        <span
+          class="validation"
+          *ngIf="
+            appointmentForm.get('appointmentDate')?.touched &&
+            appointmentForm.get('appointmentDate')?.invalid
+          ">
+
+          Appointment date is required.
+
+        </span>
+
+      </div>
+
+
+      <!-- Time Slot -->
+
+      <div class="form-group">
+
+        <label>
+          Time Slot *
+        </label>
+
+        <select
+          formControlName="timeSlot">
+
+          <option value="">
+            Select Time Slot
+          </option>
+
+          <option value="09:00 AM - 09:30 AM">
+            09:00 AM - 09:30 AM
+          </option>
+
+          <option value="09:30 AM - 10:00 AM">
+            09:30 AM - 10:00 AM
+          </option>
+
+          <option value="10:00 AM - 10:30 AM">
+            10:00 AM - 10:30 AM
+          </option>
+
+          <option value="10:30 AM - 11:00 AM">
+            10:30 AM - 11:00 AM
+          </option>
+
+          <option value="11:00 AM - 11:30 AM">
+            11:00 AM - 11:30 AM
+          </option>
+
+          <option value="02:00 PM - 02:30 PM">
+            02:00 PM - 02:30 PM
+          </option>
+
+          <option value="02:30 PM - 03:00 PM">
+            02:30 PM - 03:00 PM
+          </option>
+
+          <option value="03:00 PM - 03:30 PM">
+            03:00 PM - 03:30 PM
+          </option>
+
+          <option value="03:30 PM - 04:00 PM">
+            03:30 PM - 04:00 PM
+          </option>
+
+        </select>
+
+
+        <span
+          class="validation"
+          *ngIf="
+            appointmentForm.get('timeSlot')?.touched &&
+            appointmentForm.get('timeSlot')?.invalid
+          ">
+
+          Time slot is required.
+
+        </span>
+
+      </div>
+
+
+      <!-- Reason -->
+
+      <div class="form-group">
+
+        <label>
+          Reason
+        </label>
+
+        <textarea
+          rows="4"
+          formControlName="reason"
+          placeholder="Enter reason for visit">
+        </textarea>
+
+      </div>
+
+
+      <!-- Buttons -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="loading">
+
+          {{
+            loading
+              ? 'Booking...'
+              : 'Book Appointment'
+          }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

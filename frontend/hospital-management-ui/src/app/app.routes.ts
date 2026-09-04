@@ -126,6 +126,18 @@ export const routes: Routes = [
   },
 
   // =====================================================
+  // APPOINTMENTS MODULE
+  // =====================================================
+  {
+    path: 'appointments',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./core/models/appointment.routes').then(
+        m => m.appointmentRoutes
+      )
+  },
+
+  // =====================================================
   // USER MODULE
   // =====================================================
   {
@@ -138,24 +150,19 @@ export const routes: Routes = [
   // =====================================================
   // REPORTS
   // =====================================================
- {
-  path: 'report',
+  {
+    path: 'report',
 
-  canActivate: [
-    authGuard,
-    // roleGuard(['Admin'])
-  ],
- loadComponent: () =>
+    canActivate: [
+      authGuard,
+      // roleGuard(['Admin'])
+    ],
+
+    loadComponent: () =>
       import('./features/reports/pages/report-list/report-list').then(
         m => m.ReportListComponent
       )
-  // loadComponent: () =>
-  //   import(
-  //     './features/reports/pages/report-list/report-list'
-  //   ).then(
-  //     m => m.ReportListComponent
-  //   )
-},
+  },
 
   // =====================================================
   // FALLBACK
