@@ -1,0 +1,259 @@
+<div class="appointment-page">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Appointments</h2>
+      <p>Manage all patient appointments</p>
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="bookAppointment()">
+
+      + Book Appointment
+
+    </button>
+
+  </div>
+
+
+  <!-- Error -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- Loading -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    Loading appointments...
+
+  </div>
+
+
+  <!-- Appointment Table -->
+
+  <div
+    class="appointment-card"
+    *ngIf="!loading">
+
+    <div class="table-header">
+
+      <h3>Appointment List</h3>
+
+      <span>
+        Total: {{ appointments.length }}
+      </span>
+
+    </div>
+
+
+    <div
+      class="table-container"
+      *ngIf="appointments.length > 0">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>#</th>
+
+            <th>Patient</th>
+
+            <th>Doctor</th>
+
+            <th>Date</th>
+
+            <th>Time Slot</th>
+
+            <th>Reason</th>
+
+            <th>Status</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let appointment of appointments;
+              let i = index
+            "
+            (click)="viewDetails(appointment.appointmentId)"
+            class="clickable-row">
+
+            <td>
+              {{ i + 1 }}
+            </td>
+
+
+            <td>
+
+              <strong>
+                {{ appointment.patientName }}
+              </strong>
+
+              <small>
+                ID: {{ appointment.patientId }}
+              </small>
+
+            </td>
+
+
+            <td>
+
+              <strong>
+                {{ appointment.doctorName }}
+              </strong>
+
+              <small>
+                ID: {{ appointment.doctorId }}
+              </small>
+
+            </td>
+
+
+            <td>
+
+              {{
+                appointment.appointmentDate
+                  | date:'dd-MM-yyyy'
+              }}
+
+            </td>
+
+
+            <td>
+              {{ appointment.timeSlot }}
+            </td>
+
+
+            <td>
+
+              {{ appointment.reason || 'N/A' }}
+
+            </td>
+
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="
+                  getStatusClass(appointment.status)
+                ">
+
+                {{ getStatusLabel(appointment.status) }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div
+                class="action-buttons"
+                (click)="$event.stopPropagation()">
+
+                <button
+                  class="btn-edit"
+                  (click)="
+                    editAppointment(
+                      appointment.appointmentId
+                    )
+                  "
+                  *ngIf="
+                    isScheduled(appointment.status)
+                  ">
+
+                  Edit
+
+                </button>
+
+
+                <button
+                  class="btn-complete"
+                  (click)="
+                    completeAppointment(
+                      appointment.appointmentId
+                    )
+                  "
+                  *ngIf="
+                    isScheduled(appointment.status)
+                  ">
+
+                  Complete
+
+                </button>
+
+
+                <button
+                  class="btn-cancel"
+                  (click)="
+                    cancelAppointment(
+                      appointment.appointmentId
+                    )
+                  "
+                  *ngIf="
+                    isScheduled(appointment.status)
+                  ">
+
+                  Cancel
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- Empty -->
+
+    <div
+      class="empty-state"
+      *ngIf="appointments.length === 0">
+
+      <h3>No appointments found</h3>
+
+      <p>
+        There are currently no appointments.
+      </p>
+
+      <button
+        class="btn-primary"
+        (click)="bookAppointment()">
+
+        Book First Appointment
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

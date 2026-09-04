@@ -1,0 +1,116 @@
+<div class="appointment-details-page">
+
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to List</button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    Loading appointment details...
+  </div>
+
+  <!-- Error -->
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Details Card -->
+  <div class="details-card" *ngIf="!loading && appointment">
+
+    <div class="details-header">
+      <div>
+        <h2>Appointment #{{ appointment.appointmentId }}</h2>
+        <span class="status" [ngClass]="getStatusClass(appointment.status)">
+          {{ getStatusLabel(appointment.status) }}
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <button
+          class="btn-edit"
+          (click)="editAppointment(appointment.appointmentId)"
+          *ngIf="isScheduled(appointment.status)">
+          Edit
+        </button>
+
+        <button
+          class="btn-complete"
+          (click)="completeAppointment(appointment.appointmentId)"
+          *ngIf="isScheduled(appointment.status)">
+          Mark Completed
+        </button>
+
+        <button
+          class="btn-cancel"
+          (click)="cancelAppointment(appointment.appointmentId)"
+          *ngIf="isScheduled(appointment.status)">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <div class="details-grid">
+
+      <!-- Patient Info -->
+      <div class="info-section">
+        <h3>Patient Information</h3>
+        <div class="info-row">
+          <span class="label">Name</span>
+          <span class="value">{{ appointment.patientName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Patient ID</span>
+          <span class="value">{{ appointment.patientId }}</span>
+        </div>
+      </div>
+
+      <!-- Doctor Info -->
+      <div class="info-section">
+        <h3>Doctor Information</h3>
+        <div class="info-row">
+          <span class="label">Name</span>
+          <span class="value">Dr. {{ appointment.doctorName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Doctor ID</span>
+          <span class="value">{{ appointment.doctorId }}</span>
+        </div>
+      </div>
+
+      <!-- Schedule Info -->
+      <div class="info-section">
+        <h3>Schedule</h3>
+        <div class="info-row">
+          <span class="label">Date</span>
+          <span class="value">{{ appointment.appointmentDate | date:'dd-MM-yyyy' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Time Slot</span>
+          <span class="value">{{ appointment.timeSlot }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Created At</span>
+          <span class="value">{{ appointment.createdAt | date:'dd-MM-yyyy hh:mm a' }}</span>
+        </div>
+      </div>
+
+      <!-- Reason / Notes -->
+      <div class="info-section full-width">
+        <h3>Reason for Visit</h3>
+        <p class="reason-text">
+          {{ appointment.reason || 'No reason provided.' }}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Not Found -->
+  <div class="empty-state" *ngIf="!loading && !appointment && !errorMessage">
+    <h3>Appointment not found</h3>
+    <p>The appointment you're looking for doesn't exist.</p>
+    <button class="btn-primary" (click)="goBack()">Back to List</button>
+  </div>
+
+</div>
